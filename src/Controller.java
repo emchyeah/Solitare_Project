@@ -45,6 +45,21 @@ public class Controller {
 
             if(i > 1 && i <=5){
                 cardPiles[i].setFoundation(true);
+
+                Card.Suits suit;
+                if(i == 2){
+                    suit = Card.Suits.Hearts;
+                }
+                else if(i == 3){
+                    suit = Card.Suits.Clubs;
+                } else if (i == 4) {
+                    suit = Card.Suits.Diamonds;
+                }
+                else{
+                    suit = Card.Suits.Spades;
+                }
+
+                cardPiles[i].setSuit(suit);
                 continue;
             }
             else if(i == 1) {
@@ -83,11 +98,20 @@ public class Controller {
             card = pile.getCard(cardPos);
         }
 
-        if(card == null){
+        if(card == null || !card.getVisibility()){
             return false;
         }
 
         if(pilePos == 0){
+            if(cardPiles[0].isEmpty() && !cardPiles[1].isEmpty()){
+                Card currCard;
+                while(!cardPiles[1].isEmpty()){
+                    currCard = cardPiles[1].removeTopCard();
+                    currCard.setVisibility(false);
+                    cardPiles[0].addCard(currCard);
+                }
+            }
+
             card.setVisibility(true);
             if (cardPiles[1].addCard(card)) {
                 pile.removeTopCard();
@@ -102,7 +126,26 @@ public class Controller {
             }
 
             if(checkCard(i, card)){
+                if(cardPiles[i].getFoundation() && pile.getTopCard() != card){
+                    return false;
+                }
 
+                Card currCard;
+                List<Card> cards = new ArrayList<Card>();
+                while((currCard = pile.removeTopCard()) != card){
+                    cards.add(currCard);
+                }
+
+                currCard = null;
+                while(cards.size() > 0){
+                    currCard = cards.remove(cards.size());
+                    boolean test = cardPiles[i].addCard(currCard);
+                }
+
+                if(!pile.getTopCard().getVisibility()){
+                    pile.getTopCard().setVisibility(true);
+                }
+                return true;
             }
         }
         return false;
@@ -110,6 +153,61 @@ public class Controller {
 
 
     private boolean checkCard(int pilePos, Card card){
+        CardPile pile = cardPiles[pilePos];
+        if(pile.getFoundation()){
+            return checkFoundations(pile, card);
+        }
+        else{
+            return checkTableau(pile, card);
+        }
+    }
+
+
+    private boolean checkFoundations(CardPile pile, Card card){
+        if(pile.getSuit() == card.getSuit()) {
+            int val = getValueIndex(card);
+            if(val == 0 && pile.isEmpty()){
+                return true;
+            }
+            else if(getValueIndex(pile.getTopCard()) == val-1){
+                return true;
+            }
+        }
         return false;
+    }
+
+    private boolean checkTableau(CardPile pile, Card card){
+        if(pile.isEmpty() && card.getValue() == Card.Values.King){
+            return true;
+        }
+
+        int topColor = getColor(pile.getTopCard());
+        int cardColor = getColor(card);
+
+        if(topColor != cardColor){
+            if(getValueIndex(pile.getTopCard()) == getValueIndex(card)+1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int getValueIndex(Card card){
+        Card.Values[] val = Card.Values.values();
+        for(int i = 0; i < 13; i++){
+            if(val[i] == card.getValue()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getColor(Card card){
+        if(card.getSuit() == Card.Suits.Hearts || card.getSuit() == Card.Suits.Diamonds ){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 }

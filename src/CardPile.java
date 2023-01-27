@@ -30,8 +30,8 @@ public class CardPile {
 
     public void setSuit(Card.Suits suit){foundationSuit = suit;}
 
-    public List getList(){
-        return cards;
+    public Card[] getList(){
+        return cards.toArray(new Card[0]);
     }
 
     public Card getTopCard(){
@@ -46,16 +46,16 @@ public class CardPile {
         return cards.isEmpty();
     }
 
-    public boolean removeTopCard(){
-        return true;
+    public Card removeTopCard(){
+        return cards.remove(cards.size());
     }
 
     public boolean addCard(Card card){
-         return addCardTwo(card);
+        return cards.add(card);
     }
     // This is the private class of addCard, renamed to not conflict with public addCard
     private boolean addCardTwo(Card card){
-        return cards.add(card);
+        return false;
     }
 
     private boolean addCardOrdered(Card card){
