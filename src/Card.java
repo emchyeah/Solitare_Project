@@ -1,30 +1,30 @@
 public class Card {
 
     private boolean visible;
-    private String suit;
-    private String value;
+    private Suits suit;
+    private Values value;
 
-    private enum Suits{
+    public enum Suits{
         Hearts, Clubs, Spades, Diamonds
     }
 
-    private enum Values{
+    public enum Values{
         One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten , Jack, Queen, King, Ace
     }
 
-    public String getSuit(){
+    public Suits getSuit(){
         return suit;
     }
 
-    public void setSuit(String suit){
+    public void setSuit(Suits suit){
         this.suit = suit;
     }
 
-    public String getValue(){
+    public Values getValue(){
         return value;
     }
 
-    public void setValue(String value){
+    public void setValue(Values value){
         this.value = value;
     }
 
