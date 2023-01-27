@@ -1,10 +1,16 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardPile {
 
     private List<Card> cards;
     private boolean ordered;
+    private boolean foundation;
     private Card card;
+
+    public CardPile(){
+        cards = new ArrayList<Card>();
+    }
 
     public boolean getOrdered(){
         return ordered;
@@ -14,12 +20,20 @@ public class CardPile {
         this.ordered = ordered;
     }
 
+    public boolean getFoundation(){return foundation;}
+
+    public void setFoundation(Boolean foundation){this.foundation = foundation;}
+
     public List getList(){
         return cards;
     }
 
     public Card getTopCard(){
-        return card;
+        return getCard(cards.size());
+    }
+
+    public Card getCard(int cardPos){
+        return cards.get(cardPos);
     }
 
     public boolean removeTopCard(){
@@ -27,11 +41,11 @@ public class CardPile {
     }
 
     public boolean addCard(Card card){
-        return true;
+         return addCardTwo(card);
     }
     // This is the private class of addCard, renamed to not conflict with public addCard
     private boolean addCardTwo(Card card){
-        return true;
+        return cards.add(card);
     }
 
     private boolean addCardOrdered(Card card){
