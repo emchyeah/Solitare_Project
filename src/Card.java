@@ -5,11 +5,11 @@ public class Card {
     private Values value;
 
     public enum Suits{
-        Hearts, Clubs, Spades, Diamonds
+        Hearts, Diamonds, Clubs, Spades
     }
 
     public enum Values{
-        One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten , Jack, Queen, King, Ace
+        Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten , Jack, Queen, King
     }
 
     public Suits getSuit(){

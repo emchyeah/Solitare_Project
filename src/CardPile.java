@@ -6,6 +6,8 @@ public class CardPile {
     private List<Card> cards;
     private boolean ordered;
     private boolean foundation;
+
+    private Card.Suits foundationSuit;
     private Card card;
 
     public CardPile(){
@@ -24,6 +26,10 @@ public class CardPile {
 
     public void setFoundation(Boolean foundation){this.foundation = foundation;}
 
+    public Card.Suits getSuit(){return foundationSuit;}
+
+    public void setSuit(Card.Suits suit){foundationSuit = suit;}
+
     public List getList(){
         return cards;
     }
@@ -34,6 +40,10 @@ public class CardPile {
 
     public Card getCard(int cardPos){
         return cards.get(cardPos);
+    }
+
+    public boolean isEmpty(){
+        return cards.isEmpty();
     }
 
     public boolean removeTopCard(){
