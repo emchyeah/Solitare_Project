@@ -5,11 +5,11 @@ import java.util.List;
 public class Controller {
 
     private CardPile[] cardPiles;
-    private Object View;
+    private View view;
 
     public Controller(){
         newGame();
-        //create View here
+        view = new View(this, cardPiles);
     }
 
     //Create, Shuffles and Distributes Cards into the piles

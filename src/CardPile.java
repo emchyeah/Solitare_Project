@@ -46,6 +46,10 @@ public class CardPile {
         return cards.isEmpty();
     }
 
+    public int size(){
+        return cards.size();
+    }
+
     public Card removeTopCard(){
         return cards.remove(cards.size());
     }
