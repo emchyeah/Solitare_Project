@@ -43,8 +43,9 @@ public class View {
     }
 
     private void cardButtonPress(CardButton cB){
-        controller.move(cB.pos, cB.pile);
-        update();
+        if(controller.move(cB.pos, cB.pile)){
+            update();
+        }
     }
 
     public class CardButton extends JButton{
