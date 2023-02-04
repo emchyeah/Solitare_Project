@@ -39,7 +39,9 @@ public class View extends JFrame{
         decks.setLayout(new FlowLayout());
         decks.setBackground(Color.green);
         JPanel deck = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        deck.setBackground(Color.green);
         JPanel foundations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        foundations.setBackground(Color.green);
 
         decks.add(deck);
         decks.add(foundations);
@@ -64,6 +66,7 @@ public class View extends JFrame{
             else{
                 JPanel pile = new JPanel();
                 pile.setLayout(null);
+                pile.setBackground(Color.green);
                 Card[] cards = cardPiles[i].getList();
                 for(int j = cardPiles[i].size()-1; j >= 0; j--){
                     Card card = cards[j];
