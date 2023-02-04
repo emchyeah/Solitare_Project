@@ -21,9 +21,8 @@ public class View extends JFrame{
         //Code to set JFrame and layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(100, 100, 1100, 800);
-        this.setBackground(Color.green);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
+        this.getContentPane().setBackground(Color.green);
         update();
     }
 
@@ -38,6 +37,7 @@ public class View extends JFrame{
 
         decks = new JPanel();
         decks.setLayout(new FlowLayout());
+        decks.setBackground(Color.green);
         JPanel deck = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel foundations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
@@ -46,6 +46,7 @@ public class View extends JFrame{
 
         tableau = new JPanel();
         tableau.setLayout(new FlowLayout());
+        tableau.setBackground(Color.green);
 
         for(int i = 0; i < 13; i++){
             if(i >= 0 && i <= 5){
