@@ -25,7 +25,7 @@ public class Controller {
         Card tempCard = null;
         for(Card.Suits suit : Card.Suits.values()){
             for(Card.Values val : Card.Values.values()){
-                tempCard = new Card();
+                tempCard = new Card(val, suit);
                 tempCard.setSuit(suit);
                 tempCard.setValue(val);
                 tempCard.setVisibility(false);
@@ -48,15 +48,15 @@ public class Controller {
 
                 Card.Suits suit;
                 if(i == 2){
-                    suit = Card.Suits.Hearts;
+                    suit = Card.Suits.hearts;
                 }
                 else if(i == 3){
-                    suit = Card.Suits.Clubs;
+                    suit = Card.Suits.clubs;
                 } else if (i == 4) {
-                    suit = Card.Suits.Diamonds;
+                    suit = Card.Suits.diamonds;
                 }
                 else{
-                    suit = Card.Suits.Spades;
+                    suit = Card.Suits.spades;
                 }
 
                 cardPiles[i].setSuit(suit);
@@ -177,7 +177,7 @@ public class Controller {
     }
 
     private boolean checkTableau(CardPile pile, Card card){
-        if(pile.isEmpty() && card.getValue() == Card.Values.King){
+        if(pile.isEmpty() && card.getValue() == Card.Values.king){
             return true;
         }
 
@@ -203,7 +203,7 @@ public class Controller {
     }
 
     private int getColor(Card card){
-        if(card.getSuit() == Card.Suits.Hearts || card.getSuit() == Card.Suits.Diamonds ){
+        if(card.getSuit() == Card.Suits.hearts || card.getSuit() == Card.Suits.diamonds ){
             return 1;
         }
         else{

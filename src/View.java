@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.awt.*;
 
 public class View {
 
@@ -9,12 +10,17 @@ public class View {
     private JFrame f;
     private JPanel panel;
 
+
     public View(Controller cont, CardPile[] piles){
 
         this.cardPiles = piles;
         this.controller = cont;
-        f = new JFrame();
+        f = new JFrame("Solitaire");
         //Code to set JFrame and layout
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setBounds(100, 100, 1100, 800);
+        f.setVisible(true);
+        f.setBackground(Color.green);
         update();
     }
 
@@ -56,6 +62,7 @@ public class View {
         private int pile;
         private int pos;
 
+
         public CardButton(Card card, int pile, int pos){
             super();
             this.suit = card.getSuit();
@@ -63,12 +70,53 @@ public class View {
             this.visible = card.getVisibility();
             this.pile = pile;
             this.pos = pos;
+            this.setSize(100, 150);
 
-            setImage();
+            if(visible = true){
+
+                this.setIcon(resizeIcon(setImage(value, suit), this.getWidth(), this.getHeight()));
+                //makes the button just the image
+                this.setBorderPainted(false);
+                this.setContentAreaFilled(false);
+            } else{
+                getCardBack();
+            }
+
         }
 
-        private void setImage(){
+
+        public ImageIcon setImage(Card.Values cardValue, Card.Suits suit) {
             //Code to set card image depending on suit,value and visibility
+            String imageFile = cardValue + "_of_" + suit + ".png";
+            ImageIcon icon = null;
+            try {
+                icon = new ImageIcon(Card.class.getResource("images/" + imageFile));
+            } catch (NullPointerException e) {
+                e.getMessage();
+            }
+            return icon;
+        }
+
+
+        //gets card outline to use in empty space
+        public static Image getCardOutline() {
+            ImageIcon icon = new ImageIcon(Card.class.getResource("images/bottom01.gif"));
+            Image image = icon.getImage();
+            return image;
+        }
+
+        //gets back of card image
+        public static Image getCardBack() {
+            ImageIcon icon = new ImageIcon(Card.class.getResource("images/backOfCard.png"));
+            Image image = icon.getImage();
+            return image;
+        }
+
+        //resizes card image to fit in button
+        private static Icon resizeIcon(ImageIcon icon, int resizeWidth, int resizeHeight){
+            Image img = icon.getImage();
+            Image resizedImage = img.getScaledInstance(resizeWidth, resizeHeight, Image.SCALE_SMOOTH);
+            return new ImageIcon(resizedImage);
         }
 
     }
