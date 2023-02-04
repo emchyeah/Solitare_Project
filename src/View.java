@@ -11,6 +11,7 @@ public class View extends JFrame{
 
     private JPanel decks;
     private JPanel tableau;
+    private JLabel line;
 
 
     public View(Controller cont, CardPile[] piles){
@@ -33,6 +34,9 @@ public class View extends JFrame{
         }
         if(tableau != null){
             this.remove(tableau);
+        }
+        if(line != null){
+            this.remove(line);
         }
 
         decks = new JPanel();
@@ -85,7 +89,7 @@ public class View extends JFrame{
         }
 
         this.add(decks);
-        JLabel line = new JLabel();
+        line = new JLabel();
         line.setPreferredSize(new Dimension(30000,0));
         this.add(line);
         this.add(tableau);
