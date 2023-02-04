@@ -98,10 +98,6 @@ public class Controller {
             card = pile.getCard(cardPos);
         }
 
-        if(card == null || !card.getVisibility()){
-            return false;
-        }
-
         if(pilePos == 0){
             if(cardPiles[0].isEmpty() && !cardPiles[1].isEmpty()){
                 Card currCard;
@@ -110,6 +106,7 @@ public class Controller {
                     currCard.setVisibility(false);
                     cardPiles[0].addCard(currCard);
                 }
+                return true;
             }
 
             card.setVisibility(true);
@@ -117,6 +114,10 @@ public class Controller {
                 pile.removeTopCard();
                 return true;
             }
+            return false;
+        }
+
+        if(card == null || !card.getVisibility()){
             return false;
         }
 
@@ -135,14 +136,15 @@ public class Controller {
                 while((currCard = pile.removeTopCard()) != card){
                     cards.add(currCard);
                 }
+                cards.add(currCard);
 
                 currCard = null;
                 while(cards.size() > 0){
-                    currCard = cards.remove(cards.size());
-                    boolean test = cardPiles[i].addCard(currCard);
+                    currCard = cards.remove(cards.size()-1);
+                    cardPiles[i].addCard(currCard);
                 }
 
-                if(!pile.getTopCard().getVisibility()){
+                if(!pile.isEmpty() && !pile.getTopCard().getVisibility()){
                     pile.getTopCard().setVisibility(true);
                 }
                 return true;
@@ -169,7 +171,7 @@ public class Controller {
             if(val == 0 && pile.isEmpty()){
                 return true;
             }
-            else if(getValueIndex(pile.getTopCard()) == val-1){
+            else if(!pile.isEmpty() && getValueIndex(pile.getTopCard()) == val-1){
                 return true;
             }
         }
@@ -179,6 +181,9 @@ public class Controller {
     private boolean checkTableau(CardPile pile, Card card){
         if(pile.isEmpty() && card.getValue() == Card.Values.king){
             return true;
+        }
+        if(pile.isEmpty()){
+            return false;
         }
 
         int topColor = getColor(pile.getTopCard());

@@ -35,7 +35,11 @@ public class CardPile {
     }
 
     public Card getTopCard(){
-        return getCard(cards.size());
+        int size = cards.size()-1;
+        if (size == -1){
+            return null;
+        }
+        return getCard(size);
     }
 
     public Card getCard(int cardPos){
@@ -51,7 +55,7 @@ public class CardPile {
     }
 
     public Card removeTopCard(){
-        return cards.remove(cards.size());
+        return cards.remove(cards.size()-1);
     }
 
     public boolean addCard(Card card){
