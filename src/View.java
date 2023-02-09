@@ -1,6 +1,10 @@
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class View extends JFrame{
 
@@ -10,27 +14,39 @@ public class View extends JFrame{
     private JToolBar toolBar;
 
     private JPanel decks;
+    private JPanel filler;
+    private JPanel Filler2;
+    private JPanel foun;
     private JPanel tableau;
+    private JPanel menus;
     private JLabel line;
+   // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
+
 
 
     public View(Controller cont, CardPile[] piles){
         super("Solitaire");
         this.cardPiles = piles;
         this.controller = cont;
-
         //Code to set JFrame and layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(100, 100, 1100, 800);
         this.setLayout(new FlowLayout());
-        this.getContentPane().setBackground(Color.green);
+        this.getContentPane().setBackground(new Color(2,97,19));
         update();
     }
+
 
     public void update(){
 
         if(decks != null){
             this.remove(decks);
+        }
+        if(filler != null){
+            this.remove(filler);
+        }
+        if(foun != null){
+            this.remove(foun);
         }
         if(tableau != null){
             this.remove(tableau);
@@ -38,21 +54,45 @@ public class View extends JFrame{
         if(line != null){
             this.remove(line);
         }
+        if(menus != null){
+            this.remove(menus);
+        }
 
+        menus = new JPanel();
         decks = new JPanel();
-        decks.setLayout(new FlowLayout());
-        decks.setBackground(Color.green);
-        JPanel deck = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        deck.setBackground(Color.green);
-        JPanel foundations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        foundations.setBackground(Color.green);
+        filler = new JPanel();
+        foun = new JPanel();
+        menus.setPreferredSize(new Dimension(1010, 35));
+        decks.setLayout(new FlowLayout(FlowLayout.LEFT));
+        decks.setBackground(new Color(2,97,19));
+        foun.setBackground(new Color(2,97,19));
+        filler.setBackground(new Color(2,97,19));
+        menus.setBackground(new Color(2,97,19));
+        menus.setLayout (new BorderLayout ());
+        foun.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        filler.setLayout(new FlowLayout(FlowLayout.CENTER));
+        filler.setPreferredSize(new Dimension(300, 35));
 
+
+        JPanel deck = new JPanel();
+        deck.setBackground(new Color(2,97,19));
+        JPanel foundations = new JPanel();
+        foundations.setBackground(new Color(2,97,19));
+        JButton button = new JButton("New");
+        button.setLayout (new BorderLayout ());
+        JButton button2 = new JButton("Undo");
+        button2.setLayout (new BorderLayout ());
+
+
+
+        menus.add(button, BorderLayout.WEST);
+        menus.add(button2, BorderLayout.EAST);
         decks.add(deck);
-        decks.add(foundations);
+        foun.add(foundations);
 
         tableau = new JPanel();
         tableau.setLayout(new FlowLayout());
-        tableau.setBackground(Color.green);
+        tableau.setBackground(new Color(2,97,19));
 
         for(int i = 0; i < 13; i++){
             if(i >= 0 && i <= 5){
@@ -70,7 +110,7 @@ public class View extends JFrame{
             else{
                 JPanel pile = new JPanel();
                 pile.setLayout(null);
-                pile.setBackground(Color.green);
+                pile.setBackground(new Color(2,97,19));
                 Card[] cards = cardPiles[i].getList();
                 for(int j = cardPiles[i].size()-1; j >= 0; j--){
                     Card card = cards[j];
@@ -87,13 +127,20 @@ public class View extends JFrame{
 
             }
         }
-
+        this.add(menus);
         this.add(decks);
+        this.add(filler);
+        this.add(foun);
         line = new JLabel();
         line.setPreferredSize(new Dimension(30000,0));
         this.add(line);
         this.add(tableau);
+        menus.setVisible(true);
         decks.setVisible(true);
+        filler.setVisible(true);
+        foun.setVisible(true);
+        button.setVisible(true);
+        button2.setVisible(true);
         deck.setVisible(true);
         foundations.setVisible(true);
         this.setVisible(true);
@@ -186,4 +233,5 @@ public class View extends JFrame{
         }
 
     }
+
 }
