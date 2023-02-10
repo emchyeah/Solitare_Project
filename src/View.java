@@ -1,7 +1,10 @@
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,16 +15,18 @@ public class View extends JFrame{
     private Controller controller;
 
     private JToolBar toolBar;
-
+    private int count = 0;
     private JPanel decks;
     private JPanel filler;
     private JPanel Filler2;
+    private JLabel scoreLabel;
+    private JPanel scorePanel;
+    private JLabel score;
     private JPanel foun;
     private JPanel tableau;
     private JPanel menus;
     private JLabel line;
    // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
-
 
 
     public View(Controller cont, CardPile[] piles){
@@ -57,6 +62,12 @@ public class View extends JFrame{
         if(menus != null){
             this.remove(menus);
         }
+        if(scoreLabel != null){
+            this.remove(scoreLabel);
+        }
+        if(scorePanel != null){
+            this.remove(scorePanel);
+        }
 
         menus = new JPanel();
         decks = new JPanel();
@@ -76,17 +87,31 @@ public class View extends JFrame{
 
         JPanel deck = new JPanel();
         deck.setBackground(new Color(2,97,19));
+
         JPanel foundations = new JPanel();
         foundations.setBackground(new Color(2,97,19));
+
+        //New game button
         JButton button = new JButton("New");
         button.setLayout (new BorderLayout ());
-        JButton button2 = new JButton("Undo");
-        button2.setLayout (new BorderLayout ());
+
+        //Label for "SCORE:" text
+        scoreLabel = new JLabel("SCORE:");
+        scoreLabel.setForeground (Color.WHITE);
+        scoreLabel.setLayout (new BorderLayout ());
+
+        //Panel that stores the score Label counter
+        scorePanel = new RoundedPanel(20, Color.WHITE);;
+        scorePanel.setPreferredSize(new Dimension(80, 35));
+        scorePanel.setBackground(new Color(2,97,19));
+
+        // Label of the actual score count
+        score = new JLabel();
 
 
-
+        scorePanel.add(score);
         menus.add(button, BorderLayout.WEST);
-        menus.add(button2, BorderLayout.EAST);
+        menus.add(scoreLabel, BorderLayout.EAST);
         decks.add(deck);
         foun.add(foundations);
 
@@ -127,7 +152,9 @@ public class View extends JFrame{
 
             }
         }
+
         this.add(menus);
+        this.add(scorePanel);
         this.add(decks);
         this.add(filler);
         this.add(foun);
@@ -140,7 +167,8 @@ public class View extends JFrame{
         filler.setVisible(true);
         foun.setVisible(true);
         button.setVisible(true);
-        button2.setVisible(true);
+        scoreLabel.setVisible(true);
+        scorePanel.setVisible(true);
         deck.setVisible(true);
         foundations.setVisible(true);
         this.setVisible(true);
@@ -151,6 +179,7 @@ public class View extends JFrame{
             update();
         }
     }
+
 
     public class CardButton extends JButton{
         private Card.Suits suit;
@@ -232,6 +261,37 @@ public class View extends JFrame{
             return new ImageIcon(resizedImage);
         }
 
+    }
+    //Class for making rounded rectangle corners !!! lol
+    class RoundedPanel extends JPanel
+    {
+        private Color backgroundColor;
+        private int cornerRadius = 15;
+
+        public RoundedPanel(int radius, Color bgColor) {
+            super();
+            cornerRadius = radius;
+            backgroundColor = bgColor;
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Dimension arcs = new Dimension(cornerRadius, cornerRadius);
+            int width = getWidth();
+            int height = getHeight();
+            Graphics2D graphics = (Graphics2D) g;
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            //Draws the rounded panel with borders.
+            if (backgroundColor != null) {
+                graphics.setColor(backgroundColor);
+            } else {
+                graphics.setColor(getBackground());
+            }
+            graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
+            graphics.setColor(getForeground());
+            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
+        }
     }
 
 }
