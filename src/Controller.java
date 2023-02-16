@@ -6,12 +6,12 @@ public class Controller {
 
     private CardPile[] cardPiles;
     private List<Card> deck;
-    private View view;
+
 
     public Controller(){
         deck = createDeck();
         newGame();
-        view = new View(this, cardPiles);
+        new View(this, cardPiles);
     }
 
     //Create, Shuffles and Distributes Cards into the piles
@@ -23,8 +23,8 @@ public class Controller {
     }
 
     private List<Card> createDeck(){
-        List<Card> pile = new ArrayList<Card>();
-        Card tempCard = null;
+        List<Card> pile = new ArrayList<>();
+        Card tempCard;
         for(Card.Suits suit : Card.Suits.values()){
             for(Card.Values val : Card.Values.values()){
                 tempCard = new Card(val, suit);
@@ -39,7 +39,7 @@ public class Controller {
 
     private void distributeCards(List<Card> deck){
         int j = 7;
-        Card tempCard = null;
+        Card tempCard;
         for(int i = 12; i >= 0; i--){
             cardPiles[i] = new CardPile();
 
@@ -87,11 +87,11 @@ public class Controller {
     }
 
     //Snap card moving. Assumes position of card and pile starts at 0
-    public boolean move(int cardPos, int pilePos){
+    public int move(int cardPos, int pilePos){
         CardPile pile = cardPiles[pilePos];
 
         Card card;
-        if(pilePos >= 0 && pilePos <= 5) {
+        if(pilePos <= 5) {
             card = pile.getTopCard();
         }
         else{
@@ -99,6 +99,10 @@ public class Controller {
         }
 
         if(pilePos == 0){
+            if(cardPiles[0].isEmpty() && cardPiles[1].isEmpty()){
+                return -1;
+            }
+
             if(cardPiles[0].isEmpty() && !cardPiles[1].isEmpty()){
                 Card currCard;
                 while(!cardPiles[1].isEmpty()){
@@ -106,19 +110,19 @@ public class Controller {
                     currCard.setVisibility(false);
                     cardPiles[0].addCard(currCard);
                 }
-                return true;
+                return 0;
             }
 
             card.setVisibility(true);
             if (cardPiles[1].addCard(card)) {
                 pile.removeTopCard();
-                return true;
+                return 1;
             }
-            return false;
+            return -1;
         }
 
         if(card == null || !card.getVisibility()){
-            return false;
+            return -1;
         }
 
         for(int i = 2; i < 13; i++){
@@ -128,17 +132,16 @@ public class Controller {
 
             if(checkCard(i, card)){
                 if(cardPiles[i].getFoundation() && pile.getTopCard() != card){
-                    return false;
+                    return -1;
                 }
 
                 Card currCard;
-                List<Card> cards = new ArrayList<Card>();
+                List<Card> cards = new ArrayList<>();
                 while((currCard = pile.removeTopCard()) != card){
                     cards.add(currCard);
                 }
                 cards.add(currCard);
 
-                currCard = null;
                 while(cards.size() > 0){
                     currCard = cards.remove(cards.size()-1);
                     cardPiles[i].addCard(currCard);
@@ -147,10 +150,10 @@ public class Controller {
                 if(!pile.isEmpty() && !pile.getTopCard().getVisibility()){
                     pile.getTopCard().setVisibility(true);
                 }
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
 
@@ -171,9 +174,7 @@ public class Controller {
             if(val == 0 && pile.isEmpty()){
                 return true;
             }
-            else if(!pile.isEmpty() && getValueIndex(pile.getTopCard()) == val-1){
-                return true;
-            }
+            else return !pile.isEmpty() && getValueIndex(pile.getTopCard()) == val - 1;
         }
         return false;
     }
@@ -190,9 +191,7 @@ public class Controller {
         int cardColor = getColor(card);
 
         if(topColor != cardColor){
-            if(getValueIndex(pile.getTopCard()) == getValueIndex(card)+1){
-                return true;
-            }
+            return getValueIndex(pile.getTopCard()) == getValueIndex(card) + 1;
         }
         return false;
     }
