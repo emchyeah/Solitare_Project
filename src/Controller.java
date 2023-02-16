@@ -5,17 +5,19 @@ import java.util.List;
 public class Controller {
 
     private CardPile[] cardPiles;
+    private List<Card> deck;
     private View view;
 
     public Controller(){
+        deck = createDeck();
         newGame();
         view = new View(this, cardPiles);
     }
 
     //Create, Shuffles and Distributes Cards into the piles
     public void newGame(){
+        Collections.shuffle(deck);
         cardPiles = new CardPile[13];
-        List<Card> deck = createDeck();
         distributeCards(deck);
 
     }
@@ -32,8 +34,6 @@ public class Controller {
                 pile.add(tempCard);
             }
         }
-
-        Collections.shuffle(pile);
         return pile;
     }
 
