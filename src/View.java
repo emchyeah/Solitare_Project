@@ -64,6 +64,7 @@ public class View extends JFrame {
         button = new JButton("New Game");
         button.setLayout (new FlowLayout(FlowLayout.LEFT));
         button.setPreferredSize(new Dimension(100, 35));
+        button.addActionListener(e -> newG("New Game"));
 
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
@@ -219,8 +220,6 @@ public class View extends JFrame {
         }
 
         buttonPiles[pile-6].updateUI();
-
-
     }
 
     private void cardButtonPress(CardButton cB){
@@ -230,9 +229,21 @@ public class View extends JFrame {
             update(pile);
         }
 
+    }
+    // Method for re-setting the game
+    private void newG(String s){
+        controller.newGame();
+        update(0);
+        update(2);
+        update(6);
+        update(7);
+        update(8);
+        update(9);
+        update(10);
+        update(11);
+        update(12);
 
     }
-
 
     public class CardButton extends JButton{
         private Card.Suits suit;
