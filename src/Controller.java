@@ -14,11 +14,15 @@ public class Controller {
         new View(this, cardPiles);
     }
 
+    public CardPile[] getCardPiles() {
+        return cardPiles;
+    }
+
     //Create, Shuffles and Distributes Cards into the piles
     public void newGame(){
         Collections.shuffle(deck);
         cardPiles = new CardPile[13];
-        distributeCards(deck);
+        distributeCards(copyDeck(deck));
 
     }
 
@@ -84,6 +88,14 @@ public class Controller {
             cardPiles[i].setOrdered(true);
             j--;
         }
+    }
+
+    private List<Card> copyDeck(List<Card> deck){
+        List<Card> newDeck = new ArrayList<>();
+        for(Card card : deck){
+            newDeck.add(new Card(card.getValue(), card.getSuit()));
+        }
+        return newDeck;
     }
 
     //Snap card moving. Assumes position of card and pile starts at 0

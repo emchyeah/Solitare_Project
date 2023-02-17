@@ -233,6 +233,7 @@ public class View extends JFrame {
     // Method for re-setting the game
     private void newG(String s){
         controller.newGame();
+        cardPiles = controller.getCardPiles();
         update(0);
         update(2);
         update(6);
@@ -242,7 +243,6 @@ public class View extends JFrame {
         update(10);
         update(11);
         update(12);
-
     }
 
     public class CardButton extends JButton{
