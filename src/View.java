@@ -1,17 +1,20 @@
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class View extends JFrame{
+public class View extends JFrame {
 
     private CardPile[] cardPiles;
     private final Controller controller;
 
-
+    private JButton button;
     private JPanel deck;
     private JPanel foundations;
     private JPanel[] buttonPiles;
-   // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
+    // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
 
 
     public View(Controller cont, CardPile[] piles){
@@ -31,16 +34,24 @@ public class View extends JFrame{
         JPanel decks = new JPanel();
         JPanel filler = new JPanel();
         JPanel found = new JPanel();
-        menus.setPreferredSize(new Dimension(1010, 35));
+        JPanel filler2 = new JPanel();
+        JPanel scorePanel = new RoundedPanel(20, Color.WHITE);
         decks.setLayout(new FlowLayout(FlowLayout.LEFT));
         decks.setBackground(new Color(2,97,19));
-        found.setBackground(new Color(2,97,19));
-        filler.setBackground(new Color(2,97,19));
         menus.setBackground(new Color(2,97,19));
-        menus.setLayout (new BorderLayout ());
+        menus.setLayout (new FlowLayout(FlowLayout.LEFT));
+        menus.setPreferredSize(new Dimension(1050, 40));
         found.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        filler.setLayout(new FlowLayout(FlowLayout.CENTER));
-        filler.setPreferredSize(new Dimension(300, 35));
+        found.setBackground(new Color(2,97,19));
+        filler.setLayout(new FlowLayout(FlowLayout.LEFT));
+        filler.setPreferredSize(new Dimension(390, 35));
+        filler.setBackground(new Color(2,97,19));
+        filler2.setLayout(new FlowLayout(FlowLayout.LEFT));
+        filler2.setPreferredSize(new Dimension(795, 10));
+        filler2.setBackground(new Color(2,97,19));
+        scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        scorePanel.setPreferredSize(new Dimension(80, 35));
+        scorePanel.setBackground(new Color(2,97,19));
 
 
         deck = new JPanel();
@@ -50,29 +61,30 @@ public class View extends JFrame{
         foundations.setBackground(new Color(2,97,19));
 
         //New game button
-        JButton button = new JButton("New");
-        button.setLayout (new BorderLayout ());
+        button = new JButton("New Game");
+        button.setLayout (new FlowLayout(FlowLayout.LEFT));
+        button.setPreferredSize(new Dimension(100, 35));
 
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
         scoreLabel.setForeground (Color.WHITE);
-        scoreLabel.setLayout (new BorderLayout ());
+        scoreLabel.setLayout (new FlowLayout(FlowLayout.LEFT));
 
         //Panel that stores the score Label counter
-        JPanel scorePanel = new RoundedPanel(20, Color.WHITE);
 
-        scorePanel.setPreferredSize(new Dimension(80, 35));
-        scorePanel.setBackground(new Color(2,97,19));
 
         // Label of the actual score count
         JLabel score = new JLabel();
 
 
         scorePanel.add(score);
-        menus.add(button, BorderLayout.WEST);
-        menus.add(scoreLabel, BorderLayout.EAST);
+        menus.add(button);
+        menus.add(filler2);
+        menus.add(scoreLabel);
+        menus.add(scorePanel);
         decks.add(deck);
-        found.add(foundations);
+        decks.add(filler);
+        decks.add(foundations);
 
         JPanel tableau = new JPanel();
         tableau.setLayout(new FlowLayout());
@@ -116,10 +128,7 @@ public class View extends JFrame{
         }
 
         this.add(menus);
-        this.add(scorePanel);
         this.add(decks);
-        this.add(filler);
-        this.add(found);
         JLabel line = new JLabel();
         line.setPreferredSize(new Dimension(30000,0));
         this.add(line);
@@ -201,13 +210,13 @@ public class View extends JFrame{
         }
 
 
-            for(int i = j; i >= 0; i-- ){
-                CardButton cButton = new CardButton(cards[j],pile,i);
-                cButton.addActionListener(e -> cardButtonPress(cButton));
-                // Code to set button location
-                cButton.setBounds(25,i*20,100,150);
-                buttonPiles[pile - 6].add(cButton);
-            }
+        for(int i = j; i >= 0; i-- ){
+            CardButton cButton = new CardButton(cards[j],pile,i);
+            cButton.addActionListener(e -> cardButtonPress(cButton));
+            // Code to set button location
+            cButton.setBounds(25,i*20,100,150);
+            buttonPiles[pile - 6].add(cButton);
+        }
 
         buttonPiles[pile-6].updateUI();
 
@@ -220,6 +229,8 @@ public class View extends JFrame{
             update(cB.pile);
             update(pile);
         }
+
+
     }
 
 
