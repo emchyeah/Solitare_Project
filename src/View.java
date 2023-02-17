@@ -211,7 +211,7 @@ public class View extends JFrame {
 
 
         for(int i = j; i >= 0; i-- ){
-            CardButton cButton = new CardButton(cards[j],pile,i);
+            CardButton cButton = new CardButton(cards[i],pile,i);
             cButton.addActionListener(e -> cardButtonPress(cButton));
             // Code to set button location
             cButton.setBounds(25,i*20,100,150);
