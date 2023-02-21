@@ -1,8 +1,12 @@
 
+import javax.imageio.stream.MemoryCacheImageOutputStream;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class View extends JFrame {
@@ -15,9 +19,9 @@ public class View extends JFrame {
     private JPanel foundations;
     private JPanel[] buttonPiles;
     // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
+    Timer timer;
 
-
-    public View(Controller cont, CardPile[] piles){
+    public View(Controller cont, CardPile[] piles) {
         super("Solitaire");
         this.cardPiles = piles;
         this.controller = cont;
@@ -25,11 +29,11 @@ public class View extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(100, 100, 1100, 800);
         this.setLayout(new FlowLayout());
-        this.getContentPane().setBackground(new Color(2,97,19));
+        this.getContentPane().setBackground(new Color(2, 97, 19));
         createUI();
     }
 
-    private void createUI(){
+    private void createUI() {
         JPanel menus = new JPanel();
         JPanel decks = new JPanel();
         JPanel filler = new JPanel();
@@ -37,39 +41,39 @@ public class View extends JFrame {
         JPanel filler2 = new JPanel();
         JPanel scorePanel = new RoundedPanel(20, Color.WHITE);
         decks.setLayout(new FlowLayout(FlowLayout.LEFT));
-        decks.setBackground(new Color(2,97,19));
-        menus.setBackground(new Color(2,97,19));
-        menus.setLayout (new FlowLayout(FlowLayout.LEFT));
+        decks.setBackground(new Color(2, 97, 19));
+        menus.setBackground(new Color(2, 97, 19));
+        menus.setLayout(new FlowLayout(FlowLayout.LEFT));
         menus.setPreferredSize(new Dimension(1050, 40));
         found.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        found.setBackground(new Color(2,97,19));
+        found.setBackground(new Color(2, 97, 19));
         filler.setLayout(new FlowLayout(FlowLayout.LEFT));
         filler.setPreferredSize(new Dimension(390, 35));
-        filler.setBackground(new Color(2,97,19));
+        filler.setBackground(new Color(2, 97, 19));
         filler2.setLayout(new FlowLayout(FlowLayout.LEFT));
         filler2.setPreferredSize(new Dimension(795, 10));
-        filler2.setBackground(new Color(2,97,19));
+        filler2.setBackground(new Color(2, 97, 19));
         scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         scorePanel.setPreferredSize(new Dimension(80, 35));
-        scorePanel.setBackground(new Color(2,97,19));
+        scorePanel.setBackground(new Color(2, 97, 19));
 
 
         deck = new JPanel();
-        deck.setBackground(new Color(2,97,19));
+        deck.setBackground(new Color(2, 97, 19));
 
         foundations = new JPanel();
-        foundations.setBackground(new Color(2,97,19));
+        foundations.setBackground(new Color(2, 97, 19));
 
         //New game button
         button = new JButton("New Game");
-        button.setLayout (new FlowLayout(FlowLayout.LEFT));
+        button.setLayout(new FlowLayout(FlowLayout.LEFT));
         button.setPreferredSize(new Dimension(100, 35));
         button.addActionListener(e -> newG("New Game"));
 
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
-        scoreLabel.setForeground (Color.WHITE);
-        scoreLabel.setLayout (new FlowLayout(FlowLayout.LEFT));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //Panel that stores the score Label counter
 
@@ -89,39 +93,37 @@ public class View extends JFrame {
 
         JPanel tableau = new JPanel();
         tableau.setLayout(new FlowLayout());
-        tableau.setBackground(new Color(2,97,19));
+        tableau.setBackground(new Color(2, 97, 19));
         buttonPiles = new JPanel[7];
 
-        for(int i = 0; i < 13; i++){
-            if(i <= 5){
+        for (int i = 0; i < 13; i++) {
+            if (i <= 5) {
                 Card card = cardPiles[i].getTopCard();
-                CardButton cButton = new CardButton(card,i,cardPiles[i].size());
+                CardButton cButton = new CardButton(card, i, cardPiles[i].size());
                 cButton.setPreferredSize(new Dimension(100, 150));
                 cButton.addActionListener(e -> cardButtonPress(cButton));
                 // Code to set button location
-                if(i == 0 || i == 1){
+                if (i == 0 || i == 1) {
                     deck.add(cButton);
-                }
-                else{
+                } else {
                     foundations.add(cButton);
                 }
-            }
-            else{
+            } else {
                 JPanel pile = new JPanel();
                 pile.setLayout(null);
-                pile.setBackground(new Color(2,97,19));
+                pile.setBackground(new Color(2, 97, 19));
                 Card[] cards = cardPiles[i].getList();
-                for(int j = cardPiles[i].size()-1; j >= 0; j--){
+                for (int j = cardPiles[i].size() - 1; j >= 0; j--) {
                     Card card = cards[j];
-                    CardButton cButton = new CardButton(card,i,j);
+                    CardButton cButton = new CardButton(card, i, j);
                     cButton.addActionListener(e -> cardButtonPress(cButton));
                     // Code to set button location
-                    cButton.setBounds(25,j*20,100,150);
+                    cButton.setBounds(25, j * 20, 100, 150);
                     pile.add(cButton);
 
                 }
-                pile.setPreferredSize(new Dimension(150,1000));
-                buttonPiles[i-6] = pile;
+                pile.setPreferredSize(new Dimension(150, 1000));
+                buttonPiles[i - 6] = pile;
                 tableau.add(pile);
                 pile.setVisible(true);
 
@@ -131,7 +133,7 @@ public class View extends JFrame {
         this.add(menus);
         this.add(decks);
         JLabel line = new JLabel();
-        line.setPreferredSize(new Dimension(30000,0));
+        line.setPreferredSize(new Dimension(30000, 0));
         this.add(line);
         this.add(tableau);
         menus.setVisible(true);
@@ -147,21 +149,21 @@ public class View extends JFrame {
     }
 
 
-    private void update(int pile){
-        if(pile <= 1){
+    private void update(int pile) {
+        if (pile <= 1) {
             updateDeck();
         }
 
-        if( pile >= 2 && pile <= 5){
+        if (pile >= 2 && pile <= 5) {
             updateFoundations();
         }
 
-        if(pile > 5){
+        if (pile > 5) {
             updatePile(pile);
         }
     }
 
-    private void updateDeck(){
+    private void updateDeck() {
         Component[] comps = deck.getComponents();
         int j = 0;
         CardButton cB;
@@ -174,7 +176,7 @@ public class View extends JFrame {
         }
     }
 
-    private void updateFoundations(){
+    private void updateFoundations() {
         Component[] comps = foundations.getComponents();
         int j = 2;
         CardButton cB;
@@ -187,11 +189,11 @@ public class View extends JFrame {
         }
     }
 
-    private void updatePile(int pile){
-        Component[] comps = buttonPiles[pile-6].getComponents();
+    private void updatePile(int pile) {
+        Component[] comps = buttonPiles[pile - 6].getComponents();
         Card[] cards = cardPiles[pile].getList();
 
-        int j = cards.length-1;
+        int j = cards.length - 1;
 
         CardButton cB;
         for (Component comp : comps) {
@@ -211,27 +213,31 @@ public class View extends JFrame {
         }
 
 
-        for(int i = j; i >= 0; i-- ){
-            CardButton cButton = new CardButton(cards[i],pile,i);
+        for (int i = j; i >= 0; i--) {
+            CardButton cButton = new CardButton(cards[i], pile, i);
             cButton.addActionListener(e -> cardButtonPress(cButton));
             // Code to set button location
-            cButton.setBounds(25,i*20,100,150);
+            cButton.setBounds(25, i * 20, 100, 150);
             buttonPiles[pile - 6].add(cButton);
         }
 
-        buttonPiles[pile-6].updateUI();
+        buttonPiles[pile - 6].updateUI();
     }
 
-    private void cardButtonPress(CardButton cB){
+    private void cardButtonPress(CardButton cB) {
         int pile = controller.move(cB.pos, cB.pile);
-        if(pile != -1){
+        if (pile != -1) {
             update(cB.pile);
             update(pile);
+            cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+        } else{
+            cB.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
 
     }
+
     // Method for re-setting the game
-    private void newG(String s){
+    private void newG(String s) {
         controller.newGame();
         cardPiles = controller.getCardPiles();
         update(0);
@@ -245,7 +251,7 @@ public class View extends JFrame {
         update(12);
     }
 
-    public class CardButton extends JButton{
+    public class CardButton extends JButton {
         private Card.Suits suit;
         private Card.Values value;
         private boolean visible;
@@ -254,14 +260,27 @@ public class View extends JFrame {
         private int pos;
 
 
-        public CardButton(Card card, int pile, int pos){
+        public CardButton(Card card, int pile, int pos) {
             super();
-            if(card == null){
+
+            setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    setBorder(UIManager.getBorder("control"));
+                }
+            });
+
+
+            if (card == null) {
                 this.suit = null;
                 this.value = null;
                 this.visible = false;
-            }
-            else{
+            } else {
                 this.suit = card.getSuit();
                 this.value = card.getValue();
                 this.visible = card.getVisibility();
@@ -272,30 +291,28 @@ public class View extends JFrame {
             this.setSize(100, 150);
 
             Image img;
-            if(card == null){
+            if (card == null) {
                 img = getCardOutline();
-            }
-            else if(visible){
+            } else if (visible) {
                 img = setImage(value, suit);
 
-            } else{
+            } else {
                 img = getCardBack();
             }
             assert img != null;
             this.setIcon(resizeIcon(img, this.getWidth(), this.getHeight()));
             //makes the button just the image
-            this.setBorderPainted(false);
+            this.setBorderPainted(true);
             this.setContentAreaFilled(false);
 
         }
 
-        public void changeCard(Card card, int pile, int pos){
-            if(card == null){
+        public void changeCard(Card card, int pile, int pos) {
+            if (card == null) {
                 this.suit = null;
                 this.value = null;
                 this.visible = false;
-            }
-            else{
+            } else {
                 this.suit = card.getSuit();
                 this.value = card.getValue();
                 this.visible = card.getVisibility();
@@ -305,25 +322,23 @@ public class View extends JFrame {
             this.pos = pos;
 
             Image img;
-            if(card == null){
+            if (card == null) {
                 img = getCardOutline();
-            }
-            else if(visible){
+            } else if (visible) {
                 img = setImage(value, suit);
 
-            } else{
+            } else {
                 img = getCardBack();
             }
             assert img != null;
             this.setIcon(resizeIcon(img, this.getWidth(), this.getHeight()));
-            this.setBorderPainted(false);
+            this.setBorderPainted(true);
             this.setContentAreaFilled(false);
         }
 
-        private boolean checkCard(Card card){
+        private boolean checkCard(Card card) {
             return suit == card.getSuit() && value == card.getValue() && visible == card.getVisibility();
         }
-
 
 
         private Image setImage(Card.Values cardValue, Card.Suits suit) {
@@ -355,15 +370,15 @@ public class View extends JFrame {
         }
 
         //resizes card image to fit in button
-        private static Icon resizeIcon(Image img, int resizeWidth, int resizeHeight){
+        private static Icon resizeIcon(Image img, int resizeWidth, int resizeHeight) {
             Image resizedImage = img.getScaledInstance(resizeWidth, resizeHeight, Image.SCALE_SMOOTH);
             return new ImageIcon(resizedImage);
         }
 
     }
+
     //Class for making rounded rectangle corners !!! lol
-    class RoundedPanel extends JPanel
-    {
+    class RoundedPanel extends JPanel {
         private Color backgroundColor;
         private int cornerRadius;
 
@@ -372,6 +387,7 @@ public class View extends JFrame {
             cornerRadius = radius;
             backgroundColor = bgColor;
         }
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -387,9 +403,9 @@ public class View extends JFrame {
             } else {
                 graphics.setColor(getBackground());
             }
-            graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
+            graphics.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //paint background
             graphics.setColor(getForeground());
-            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
+            graphics.drawRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //paint border
         }
     }
 

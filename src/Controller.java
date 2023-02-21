@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,6 +8,8 @@ public class Controller {
 
     private CardPile[] cardPiles;
     private List<Card> deck;
+
+    View view;
 
 
     public Controller(){
