@@ -9,9 +9,6 @@ public class Controller {
     private CardPile[] cardPiles;
     private List<Card> deck;
 
-    View view;
-
-
     public Controller(){
         deck = createDeck();
         newGame();

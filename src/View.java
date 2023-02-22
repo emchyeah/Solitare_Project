@@ -1,7 +1,6 @@
 
-import javax.imageio.stream.MemoryCacheImageOutputStream;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +18,10 @@ public class View extends JFrame {
     private JPanel foundations;
     private JPanel[] buttonPiles;
     // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
-    Timer timer;
+    static JMenuBar mB;
+    static JMenu x;
+    static JMenuItem m1;
+    Popup popup;
 
     public View(Controller cont, CardPile[] piles) {
         super("Solitaire");
@@ -31,6 +33,30 @@ public class View extends JFrame {
         this.setLayout(new FlowLayout());
         this.getContentPane().setBackground(new Color(2, 97, 19));
         createUI();
+
+        //setting up menu bar
+        mB = new JMenuBar();
+        x = new JMenu("Help");
+        m1 = new JMenuItem("Instructions");
+
+        //setting up popup
+        JFrame popFrame = new JFrame("Instructions");
+        JLabel popLabel = new JLabel("Hello");
+        PopupFactory pf = new PopupFactory();
+        popFrame.setSize(400, 400);
+        JPanel popPanel = new JPanel();
+        popPanel.add(popLabel);
+        popup = pf.getPopup(popFrame, popPanel, 180, 100);
+
+        //popup window opens on menu option button click
+        m1.addActionListener(e -> {
+            popup.show();
+        });
+
+        x.add(m1);
+        mB.add(x);
+        this.add(mB);
+
     }
 
     private void createUI() {
@@ -129,6 +155,8 @@ public class View extends JFrame {
 
             }
         }
+
+
 
         this.add(menus);
         this.add(decks);
@@ -229,8 +257,10 @@ public class View extends JFrame {
         if (pile != -1) {
             update(cB.pile);
             update(pile);
+            //adds green border on successful click
             cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-        } else{
+        } else {
+            //adds red border on unsuccessful click
             cB.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
 
@@ -263,13 +293,17 @@ public class View extends JFrame {
         public CardButton(Card card, int pile, int pos) {
             super();
 
+            //adds black border to card buttons
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
             addMouseListener(new MouseAdapter() {
                 @Override
+                //adds blue border to button when hovered over
                 public void mouseEntered(MouseEvent e) {
                     setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
                 }
+
                 @Override
+                //removes border when mouse leaves button
                 public void mouseExited(MouseEvent e) {
                     setBorder(UIManager.getBorder("control"));
                 }
