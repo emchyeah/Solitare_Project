@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class View extends JFrame {
@@ -22,6 +24,8 @@ public class View extends JFrame {
     static JMenu x;
     static JMenuItem m1;
     Popup popup;
+
+    private static List<CardButton> litCards = new ArrayList<CardButton>();
 
     public View(Controller cont, CardPile[] piles) {
         super("Solitaire");
@@ -240,6 +244,7 @@ public class View extends JFrame {
 
                 if(movedCards > 0){
                     cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+                    litCards.add(cB);
                     movedCards--;
                 }
                 j--;
@@ -287,6 +292,13 @@ public class View extends JFrame {
         update(12);
     }
 
+    public static void clearLitCards(){
+        for(CardButton cB : litCards){
+            cB.setBorder(UIManager.getBorder("control"));
+        }
+        litCards.clear();
+    }
+
     public class CardButton extends JButton {
         private Card.Suits suit;
         private Card.Values value;
@@ -312,6 +324,7 @@ public class View extends JFrame {
                 //removes border when mouse leaves button
                 public void mouseExited(MouseEvent e) {
                     setBorder(UIManager.getBorder("control"));
+                    View.clearLitCards();
                 }
             });
 
