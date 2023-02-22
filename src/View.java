@@ -101,9 +101,9 @@ public class View extends JFrame {
         button.addActionListener(e -> newG("New Game"));
 
         //Label for "SCORE:" text
-//        JLabel scoreLabel = new JLabel("SCORE:");
-//        scoreLabel.setForeground(Color.WHITE);
-//        scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JLabel scoreLabel = new JLabel("SCORE:");
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //Panel that stores the score Label counter
 
@@ -116,7 +116,7 @@ public class View extends JFrame {
         menus.add(button);
         menus.add(filler2);
 //        menus.add(scoreLabel);
-        menus.add(scorePanel);
+//        menus.add(scorePanel);
         decks.add(deck);
         decks.add(filler);
         decks.add(foundations);
@@ -174,7 +174,7 @@ public class View extends JFrame {
         found.setVisible(true);
         button.setVisible(true);
 //        scoreLabel.setVisible(true);
-        scorePanel.setVisible(true);
+//        scorePanel.setVisible(true);
         deck.setVisible(true);
         foundations.setVisible(true);
         this.setVisible(true);
