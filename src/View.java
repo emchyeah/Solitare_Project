@@ -222,6 +222,7 @@ public class View extends JFrame {
         Card[] cards = cardPiles[pile].getList();
 
         int j = cards.length - 1;
+        int movedCards = controller.getMovedCards();
 
         CardButton cB;
         for (Component comp : comps) {
@@ -236,6 +237,11 @@ public class View extends JFrame {
                     cB.changeCard(cards[j], pile, j);
                 }
                 cB.setBounds(25, j * 20, 100, 150);
+
+                if(movedCards > 0){
+                    cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+                    movedCards--;
+                }
                 j--;
             }
         }

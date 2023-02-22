@@ -8,6 +8,7 @@ public class Controller {
 
     private CardPile[] cardPiles;
     private List<Card> deck;
+    private int movedCards;
 
     public Controller(){
         deck = createDeck();
@@ -17,6 +18,10 @@ public class Controller {
 
     public CardPile[] getCardPiles() {
         return cardPiles;
+    }
+
+    public int getMovedCards() {
+        return movedCards;
     }
 
     //Create, Shuffles and Distributes Cards into the piles
@@ -123,12 +128,14 @@ public class Controller {
                     currCard.setVisibility(false);
                     cardPiles[0].addCard(currCard);
                 }
+                movedCards = 1;
                 return 0;
             }
 
             card.setVisibility(true);
             if (cardPiles[1].addCard(card)) {
                 pile.removeTopCard();
+                movedCards = 1;
                 return 1;
             }
             return -1;
@@ -150,9 +157,12 @@ public class Controller {
 
                 Card currCard;
                 List<Card> cards = new ArrayList<>();
+                movedCards = 0;
                 while((currCard = pile.removeTopCard()) != card){
+                    movedCards++;
                     cards.add(currCard);
                 }
+                movedCards++;
                 cards.add(currCard);
 
                 while(cards.size() > 0){
