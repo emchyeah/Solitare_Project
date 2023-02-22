@@ -266,10 +266,11 @@ public class View extends JFrame {
     private void cardButtonPress(CardButton cB) {
         int pile = controller.move(cB.pos, cB.pile);
         if (pile != -1) {
-            update(cB.pile);
             update(pile);
+            update(cB.pile);
+
             //adds green border on successful click
-            cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+            //cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
         } else {
             //adds red border on unsuccessful click
             cB.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -318,13 +319,13 @@ public class View extends JFrame {
                 //adds blue border to button when hovered over
                 public void mouseEntered(MouseEvent e) {
                     setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+                    View.clearLitCards();
                 }
 
                 @Override
                 //removes border when mouse leaves button
                 public void mouseExited(MouseEvent e) {
                     setBorder(UIManager.getBorder("control"));
-                    View.clearLitCards();
                 }
             });
 
