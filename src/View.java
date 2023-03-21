@@ -2,8 +2,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -22,8 +20,7 @@ public class View extends JFrame {
     // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
     static JMenuBar mB;
     static JMenu x;
-    static JMenuItem m1;
-    Popup popup;
+    static JMenuItem instructionMenu;
 
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
@@ -38,28 +35,7 @@ public class View extends JFrame {
         this.getContentPane().setBackground(new Color(2, 97, 19));
         createUI();
 
-        //setting up menu bar
-        mB = new JMenuBar();
-        x = new JMenu("Help");
-        m1 = new JMenuItem("Instructions");
 
-        //setting up popup
-        JFrame popFrame = new JFrame("Instructions");
-        JLabel popLabel = new JLabel("Hello");
-        PopupFactory pf = new PopupFactory();
-        popFrame.setSize(400, 400);
-        JPanel popPanel = new JPanel();
-        popPanel.add(popLabel);
-        popup = pf.getPopup(popFrame, popPanel, 180, 100);
-
-        //popup window opens on menu option button click
-        m1.addActionListener(e -> {
-            popup.show();
-        });
-
-        x.add(m1);
-        mB.add(x);
-        this.add(mB);
 
     }
 
@@ -121,6 +97,26 @@ public class View extends JFrame {
         decks.add(filler);
         decks.add(foundations);
 
+        //setting up menu bar
+        mB = new JMenuBar();
+        x = new JMenu("Help");
+        instructionMenu = new JMenuItem("Instructions");
+
+        //adds JMenuBar/items
+        x.add(instructionMenu);
+        mB.add(x);
+        this.setJMenuBar(mB);
+
+        //opens instructions window on button click
+        instructionMenu.addActionListener(e -> {
+            Instructions gui = new Instructions(View.this);
+            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            gui.setSize(790, 625);
+            gui.setLocation(300, 200);
+            gui.getContentPane().setBackground(new Color(62, 210, 175));
+            gui.setVisible(true);
+        });
+
         JPanel tableau = new JPanel();
         tableau.setLayout(new FlowLayout());
         tableau.setBackground(new Color(2, 97, 19));
@@ -161,7 +157,6 @@ public class View extends JFrame {
         }
 
 
-
         this.add(menus);
         this.add(decks);
         JLabel line = new JLabel();
@@ -179,7 +174,6 @@ public class View extends JFrame {
         foundations.setVisible(true);
         this.setVisible(true);
     }
-
 
     private void update(int pile) {
         if (pile <= 1) {
@@ -242,7 +236,7 @@ public class View extends JFrame {
                 }
                 cB.setBounds(25, j * 20, 100, 150);
 
-                if(movedCards > 0){
+                if (movedCards > 0) {
                     cB.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
                     litCards.add(cB);
                     movedCards--;
@@ -293,8 +287,8 @@ public class View extends JFrame {
         update(12);
     }
 
-    public static void clearLitCards(){
-        for(CardButton cB : litCards){
+    public static void clearLitCards() {
+        for (CardButton cB : litCards) {
             cB.setBorder(UIManager.getBorder("control"));
         }
         litCards.clear();
