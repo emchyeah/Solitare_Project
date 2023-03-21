@@ -26,6 +26,9 @@ public class View extends JFrame {
     static JMenuItem m1;
     Popup popup;
 
+    private JLabel timer;
+    private JLabel score;
+
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
     public View(Controller cont, CardPile[] piles) {
@@ -117,7 +120,7 @@ public class View extends JFrame {
         scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Label of the actual score count
-        JLabel score = new JLabel();
+        score = new JLabel();
 
         //Stores timer Label
         JPanel timePanel = new RoundedPanel(20, Color.WHITE);
@@ -126,7 +129,7 @@ public class View extends JFrame {
         timePanel.setBackground(new Color(2, 97, 19));
 
         //Label for timer
-        JLabel timer = new JLabel();
+        timer = new JLabel();
 
 
         scorePanel.add(score);
@@ -336,6 +339,10 @@ public class View extends JFrame {
             cB.setBorder(UIManager.getBorder("control"));
         }
         litCards.clear();
+    }
+
+    public void updateTime(int gameMinutes, int gameSeconds){
+        timer.setText(gameMinutes + ":" + gameSeconds);
     }
 
     public class CardButton extends JButton {

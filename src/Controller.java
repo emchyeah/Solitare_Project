@@ -1,19 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class Controller {
 
+    private View view;
     private CardPile[] cardPiles;
     private List<Card> deck;
     private int movedCards;
+    private Instant startTime;
+    private int gameSeconds;
+    private int gameMinutes;
+
+    private TimerTask gameTimer;
 
     public Controller(){
         deck = createDeck();
         newGame();
-        new View(this, cardPiles);
+        view = new View(this, cardPiles);
+        startTimer();
     }
 
     public CardPile[] getCardPiles() {
@@ -30,11 +41,33 @@ public class Controller {
         cardPiles = new CardPile[13];
         distributeCards(copyDeck(deck));
 
+        if(view != null){
+            startTimer();
+        }
     }
 
     public void resetGame(){
         cardPiles = new CardPile[13];
         distributeCards(copyDeck(deck));
+
+        startTimer();
+    }
+
+    private void startTimer(){
+        if(gameTimer != null){
+            gameTimer.cancel();
+        }
+        gameTimer = new GameTimer(this);
+        startTime = Instant.now();
+        Timer timer = new Timer();
+        timer.schedule(gameTimer,5,1000);
+    }
+
+    public void updateTime(Instant currTime){
+        Duration time = Duration.between(startTime,currTime);
+        gameMinutes = time.toMinutesPart();
+        gameSeconds = time.toSecondsPart();
+        view.updateTime(gameMinutes,gameSeconds);
     }
 
     private List<Card> createDeck(){
