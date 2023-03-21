@@ -345,6 +345,10 @@ public class View extends JFrame {
         timer.setText(gameMinutes + ":" + gameSeconds);
     }
 
+    public void updateScore(int scoreVal){
+        score.setText(""+scoreVal);
+    }
+
     public class CardButton extends JButton {
         private Card.Suits suit;
         private Card.Values value;
