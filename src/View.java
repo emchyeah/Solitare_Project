@@ -16,6 +16,7 @@ public class View extends JFrame {
     private final Controller controller;
 
     private JButton button;
+    private JButton resetButton;
     private JPanel deck;
     private JPanel foundations;
     private JPanel[] buttonPiles;
@@ -100,6 +101,11 @@ public class View extends JFrame {
         button.setPreferredSize(new Dimension(100, 35));
         button.addActionListener(e -> newG("New Game"));
 
+        resetButton = new JButton("Reset Game");
+        resetButton.setLayout(new FlowLayout(FlowLayout.LEFT));
+        resetButton.setPreferredSize(new Dimension(100, 35));
+        resetButton.addActionListener(e -> resetG("Reset Game"));
+
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
         scoreLabel.setForeground(Color.WHITE);
@@ -114,9 +120,10 @@ public class View extends JFrame {
 
         scorePanel.add(score);
         menus.add(button);
+        menus.add(resetButton);
         menus.add(filler2);
-//        menus.add(scoreLabel);
-//        menus.add(scorePanel);
+        menus.add(scoreLabel);
+        menus.add(scorePanel);
         decks.add(deck);
         decks.add(filler);
         decks.add(foundations);
@@ -173,8 +180,9 @@ public class View extends JFrame {
         filler.setVisible(true);
         found.setVisible(true);
         button.setVisible(true);
-//        scoreLabel.setVisible(true);
-//        scorePanel.setVisible(true);
+        resetButton.setVisible(true);
+        scoreLabel.setVisible(true);
+        scorePanel.setVisible(true);
         deck.setVisible(true);
         foundations.setVisible(true);
         this.setVisible(true);
@@ -281,6 +289,21 @@ public class View extends JFrame {
     // Method for re-setting the game
     private void newG(String s) {
         controller.newGame();
+        cardPiles = controller.getCardPiles();
+        update(0);
+        update(2);
+        update(6);
+        update(7);
+        update(8);
+        update(9);
+        update(10);
+        update(11);
+        update(12);
+    }
+
+    //Method for resetting the game
+    private void resetG(String s2){
+        controller.resetGame();
         cardPiles = controller.getCardPiles();
         update(0);
         update(2);

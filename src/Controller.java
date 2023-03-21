@@ -32,6 +32,11 @@ public class Controller {
 
     }
 
+    public void resetGame(){
+        cardPiles = new CardPile[13];
+        distributeCards(copyDeck(deck));
+    }
+
     private List<Card> createDeck(){
         List<Card> pile = new ArrayList<>();
         Card tempCard;
