@@ -47,6 +47,7 @@ public class View extends JFrame {
         JPanel filler = new JPanel();
         JPanel found = new JPanel();
         JPanel filler2 = new JPanel();
+        JPanel filler3 = new JPanel();
         JPanel scorePanel = new RoundedPanel(20, Color.WHITE);
         decks.setLayout(new FlowLayout(FlowLayout.LEFT));
         decks.setBackground(new Color(2, 97, 19));
@@ -59,8 +60,11 @@ public class View extends JFrame {
         filler.setPreferredSize(new Dimension(390, 35));
         filler.setBackground(new Color(2, 97, 19));
         filler2.setLayout(new FlowLayout(FlowLayout.LEFT));
-        filler2.setPreferredSize(new Dimension(632, 10));
+        filler2.setPreferredSize(new Dimension(266, 10));
         filler2.setBackground(new Color(2, 97, 19));
+        filler3.setLayout(new FlowLayout(FlowLayout.LEFT));
+        filler3.setPreferredSize(new Dimension(275, 10));
+        filler3.setBackground(new Color(2, 97, 19));
         scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         scorePanel.setPreferredSize(new Dimension(80, 35));
         scorePanel.setBackground(new Color(2, 97, 19));
@@ -112,17 +116,26 @@ public class View extends JFrame {
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        //Panel that stores the score Label counter
-
-
         // Label of the actual score count
         JLabel score = new JLabel();
 
+        //Stores timer Label
+        JPanel timePanel = new RoundedPanel(20, Color.WHITE);
+        timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        timePanel.setPreferredSize(new Dimension(80, 35));
+        timePanel.setBackground(new Color(2, 97, 19));
+
+        //Label for timer
+        JLabel timer = new JLabel();
+
 
         scorePanel.add(score);
+        timePanel.add(timer);
         menus.add(button);
         menus.add(resetButton);
         menus.add(filler2);
+        menus.add(timePanel);
+        menus.add(filler3);
         menus.add(scoreLabel);
         menus.add(scorePanel);
         menus.add(mB);
