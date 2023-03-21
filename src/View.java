@@ -39,29 +39,6 @@ public class View extends JFrame {
         this.getContentPane().setBackground(new Color(2, 97, 19));
         createUI();
 
-        //setting up menu bar
-        mB = new JMenuBar();
-        x = new JMenu("Help");
-        m1 = new JMenuItem("Instructions");
-
-        //setting up popup
-        JFrame popFrame = new JFrame("Instructions");
-        JLabel popLabel = new JLabel("Hello");
-        PopupFactory pf = new PopupFactory();
-        popFrame.setSize(400, 400);
-        JPanel popPanel = new JPanel();
-        popPanel.add(popLabel);
-        popup = pf.getPopup(popFrame, popPanel, 180, 100);
-
-        //popup window opens on menu option button click
-        m1.addActionListener(e -> {
-            popup.show();
-        });
-
-        x.add(m1);
-        mB.add(x);
-        this.add(mB);
-
     }
 
     private void createUI() {
@@ -82,11 +59,35 @@ public class View extends JFrame {
         filler.setPreferredSize(new Dimension(390, 35));
         filler.setBackground(new Color(2, 97, 19));
         filler2.setLayout(new FlowLayout(FlowLayout.LEFT));
-        filler2.setPreferredSize(new Dimension(795, 10));
+        filler2.setPreferredSize(new Dimension(632, 10));
         filler2.setBackground(new Color(2, 97, 19));
         scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         scorePanel.setPreferredSize(new Dimension(80, 35));
         scorePanel.setBackground(new Color(2, 97, 19));
+
+        //setting up menu bar
+        mB = new JMenuBar();
+        x = new JMenu("Help");
+        x.setPreferredSize(new Dimension(40, 27));
+        m1 = new JMenuItem("Instructions");
+
+        //setting up popup
+        JFrame popFrame = new JFrame("Instructions");
+        JLabel popLabel = new JLabel("Hello");
+        PopupFactory pf = new PopupFactory();
+        popFrame.setSize(400, 400);
+        JPanel popPanel = new JPanel();
+        popPanel.add(popLabel);
+        popup = pf.getPopup(popFrame, popPanel, 180, 100);
+
+        //popup window opens on menu option button click
+        m1.addActionListener(e -> {
+            popup.show();
+        });
+
+        x.add(m1);
+        mB.add(x);
+        this.add(mB);
 
 
         deck = new JPanel();
@@ -124,6 +125,7 @@ public class View extends JFrame {
         menus.add(filler2);
         menus.add(scoreLabel);
         menus.add(scorePanel);
+        menus.add(mB);
         decks.add(deck);
         decks.add(filler);
         decks.add(foundations);
