@@ -65,7 +65,7 @@ public class View extends JFrame {
         filler3.setLayout(new FlowLayout(FlowLayout.LEFT));
         filler3.setPreferredSize(new Dimension(340, 10));
         filler3.setBackground(new Color(2, 97, 19));
-        scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        scorePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         scorePanel.setPreferredSize(new Dimension(80, 35));
         scorePanel.setBackground(new Color(2, 97, 19));
 
@@ -90,19 +90,20 @@ public class View extends JFrame {
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
         scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        scoreLabel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         // Label of the actual score count
         score = new JLabel();
 
         //Stores timer Label
         JPanel timePanel = new RoundedPanel(20, Color.WHITE);
-        timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         timePanel.setPreferredSize(new Dimension(80, 35));
         timePanel.setBackground(new Color(2, 97, 19));
 
         //Label for timer
         timer = new JLabel();
+        timer.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         //setting up menu bar
         mB = new JMenuBar();
