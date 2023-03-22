@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +14,7 @@ public class View extends JFrame {
     private final Controller controller;
 
     private JButton button;
+    private JButton resetButton;
     private JPanel deck;
     private JPanel foundations;
     private JPanel[] buttonPiles;
@@ -23,7 +22,9 @@ public class View extends JFrame {
     static JMenuBar mB;
     static JMenu x;
     static JMenuItem m1;
-    Popup popup;
+    private JLabel timer;
+    private JLabel score;
+    JMenuItem instructionMenu;
 
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
@@ -38,29 +39,6 @@ public class View extends JFrame {
         this.getContentPane().setBackground(new Color(2, 97, 19));
         createUI();
 
-        //setting up menu bar
-        mB = new JMenuBar();
-        x = new JMenu("Help");
-        m1 = new JMenuItem("Instructions");
-
-        //setting up popup
-        JFrame popFrame = new JFrame("Instructions");
-        JLabel popLabel = new JLabel("Hello");
-        PopupFactory pf = new PopupFactory();
-        popFrame.setSize(400, 400);
-        JPanel popPanel = new JPanel();
-        popPanel.add(popLabel);
-        popup = pf.getPopup(popFrame, popPanel, 180, 100);
-
-        //popup window opens on menu option button click
-        m1.addActionListener(e -> {
-            popup.show();
-        });
-
-        x.add(m1);
-        mB.add(x);
-        this.add(mB);
-
     }
 
     private void createUI() {
@@ -69,6 +47,7 @@ public class View extends JFrame {
         JPanel filler = new JPanel();
         JPanel found = new JPanel();
         JPanel filler2 = new JPanel();
+        JPanel filler3 = new JPanel();
         JPanel scorePanel = new RoundedPanel(20, Color.WHITE);
         decks.setLayout(new FlowLayout(FlowLayout.LEFT));
         decks.setBackground(new Color(2, 97, 19));
@@ -81,8 +60,11 @@ public class View extends JFrame {
         filler.setPreferredSize(new Dimension(390, 35));
         filler.setBackground(new Color(2, 97, 19));
         filler2.setLayout(new FlowLayout(FlowLayout.LEFT));
-        filler2.setPreferredSize(new Dimension(795, 10));
+        filler2.setPreferredSize(new Dimension(266, 10));
         filler2.setBackground(new Color(2, 97, 19));
+        filler3.setLayout(new FlowLayout(FlowLayout.LEFT));
+        filler3.setPreferredSize(new Dimension(340, 10));
+        filler3.setBackground(new Color(2, 97, 19));
         scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         scorePanel.setPreferredSize(new Dimension(80, 35));
         scorePanel.setBackground(new Color(2, 97, 19));
@@ -100,21 +82,56 @@ public class View extends JFrame {
         button.setPreferredSize(new Dimension(100, 35));
         button.addActionListener(e -> newG("New Game"));
 
+        resetButton = new JButton("Reset Game");
+        resetButton.setLayout(new FlowLayout(FlowLayout.LEFT));
+        resetButton.setPreferredSize(new Dimension(100, 35));
+        resetButton.addActionListener(e -> resetG("Reset Game"));
+
         //Label for "SCORE:" text
         JLabel scoreLabel = new JLabel("SCORE:");
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        //Panel that stores the score Label counter
-
-
         // Label of the actual score count
-        JLabel score = new JLabel();
+        score = new JLabel();
+
+        //Stores timer Label
+        JPanel timePanel = new RoundedPanel(20, Color.WHITE);
+        timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        timePanel.setPreferredSize(new Dimension(80, 35));
+        timePanel.setBackground(new Color(2, 97, 19));
+
+        //Label for timer
+        timer = new JLabel();
+
+        //setting up menu bar
+        mB = new JMenuBar();
+        x = new JMenu("Help");
+        instructionMenu = new JMenuItem("Instructions");
+
+        //adds JMenuBar/items
+        x.add(instructionMenu);
+        mB.add(x);
+        this.setJMenuBar(mB);
+
+        //opens instructions window on button click
+        instructionMenu.addActionListener(e -> {
+            Instructions gui = new Instructions(View.this);
+            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            gui.setSize(790, 625);
+            gui.setLocation(300, 200);
+            gui.getContentPane().setBackground(new Color(62, 210, 175));
+            gui.setVisible(true);
+        });
 
 
         scorePanel.add(score);
+        timePanel.add(timer);
         menus.add(button);
+        menus.add(resetButton);
         menus.add(filler2);
+        menus.add(timePanel);
+        menus.add(filler3);
         menus.add(scoreLabel);
         menus.add(scorePanel);
         decks.add(deck);
@@ -173,6 +190,7 @@ public class View extends JFrame {
         filler.setVisible(true);
         found.setVisible(true);
         button.setVisible(true);
+        resetButton.setVisible(true);
         scoreLabel.setVisible(true);
         scorePanel.setVisible(true);
         deck.setVisible(true);
@@ -293,11 +311,34 @@ public class View extends JFrame {
         update(12);
     }
 
+    //Method for resetting the game
+    private void resetG(String s2){
+        controller.resetGame();
+        cardPiles = controller.getCardPiles();
+        update(0);
+        update(2);
+        update(6);
+        update(7);
+        update(8);
+        update(9);
+        update(10);
+        update(11);
+        update(12);
+    }
+
     public static void clearLitCards(){
         for(CardButton cB : litCards){
             cB.setBorder(UIManager.getBorder("control"));
         }
         litCards.clear();
+    }
+
+    public void updateTime(int gameMinutes, int gameSeconds){
+        timer.setText(gameMinutes + ":" + gameSeconds);
+    }
+
+    public void updateScore(int scoreVal){
+        score.setText(""+scoreVal);
     }
 
     public class CardButton extends JButton {
