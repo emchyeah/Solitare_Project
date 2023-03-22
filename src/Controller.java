@@ -1,19 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class Controller {
 
+    private View view;
     private CardPile[] cardPiles;
     private List<Card> deck;
     private int movedCards;
+    private Instant startTime;
+    private int gameSeconds;
+    private int gameMinutes;
+
+    private int score;
+    private int scoreTime;
+    private int draws = 0;
+
+    private TimerTask gameTimer;
+
+    public boolean timed = true;
 
     public Controller(){
         deck = createDeck();
         newGame();
-        new View(this, cardPiles);
+        view = new View(this, cardPiles);
+        startTimer();
+        view.updateScore(score);
     }
 
     public CardPile[] getCardPiles() {
@@ -30,6 +48,46 @@ public class Controller {
         cardPiles = new CardPile[13];
         distributeCards(copyDeck(deck));
 
+        score = 0;
+        if(view != null){
+            startTimer();
+            view.updateScore(score);
+        }
+    }
+
+    public void resetGame(){
+        cardPiles = new CardPile[13];
+        distributeCards(copyDeck(deck));
+
+        startTimer();
+        score = -50;
+        view.updateScore(score);
+    }
+
+    private void startTimer(){
+        if(gameTimer != null){
+            gameTimer.cancel();
+        }
+        gameTimer = new GameTimer(this);
+        startTime = Instant.now();
+        Timer timer = new Timer();
+        timer.schedule(gameTimer,5,1000);
+    }
+
+    public void updateTime(Instant currTime){
+        Duration time = Duration.between(startTime,currTime);
+        gameMinutes = time.toMinutesPart();
+        gameSeconds = time.toSecondsPart();
+        view.updateTime(gameMinutes,gameSeconds);
+
+        if(timed){
+            int sec = scoreTime*10;
+            if(time.getSeconds() >= sec + 10) {
+                scoreTime++;
+                score -= 2;
+                view.updateScore(score);
+            }
+        }
     }
 
     private List<Card> createDeck(){
@@ -129,6 +187,12 @@ public class Controller {
                     cardPiles[0].addCard(currCard);
                 }
                 movedCards = 1;
+
+                if(draws >= 1){
+                    score = score -100;
+                    view.updateScore(score);
+                }
+                draws ++;
                 return 0;
             }
 
@@ -155,6 +219,8 @@ public class Controller {
                     return -1;
                 }
 
+                cardScore(pilePos, i);
+
                 Card currCard;
                 List<Card> cards = new ArrayList<>();
                 movedCards = 0;
@@ -172,11 +238,32 @@ public class Controller {
 
                 if(!pile.isEmpty() && !pile.getTopCard().getVisibility()){
                     pile.getTopCard().setVisibility(true);
+                    score += 5;
                 }
+                view.updateScore(score);
                 return i;
             }
         }
         return -1;
+    }
+
+    private void cardScore(int pilePos, int i){
+        if(pilePos == 1){
+            score += 5;
+        }
+
+        if(i <= 5){
+            score += 10;
+        }
+
+        if(pilePos != 1 && i > 5){
+            score += 3;
+        }
+
+        if(pilePos <= 5 && pilePos > 1){
+            score -= 15;
+        }
+
     }
 
 
