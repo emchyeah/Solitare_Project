@@ -21,10 +21,9 @@ public class View extends JFrame {
     // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
     static JMenuBar mB;
     static JMenu x;
-    static JMenuItem m1;
     private JLabel timer;
     private JLabel score;
-    JMenuItem instructionMenu;
+    static JMenuItem instructionMenu;
 
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
@@ -119,8 +118,8 @@ public class View extends JFrame {
         instructionMenu.addActionListener(e -> {
             Instructions gui = new Instructions(View.this);
             gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            gui.setSize(790, 625);
-            gui.setLocation(300, 200);
+            gui.setSize(790, 925);
+            gui.setLocation(700, 50);
             gui.getContentPane().setBackground(new Color(62, 210, 175));
             gui.setVisible(true);
         });
