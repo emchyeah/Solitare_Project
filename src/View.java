@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,11 +18,19 @@ public class View extends JFrame {
     private JPanel[] buttonPiles;
     // private JLabel imageLabel = new JLabel(new ImageIcon("/cardImages/green-poker.png"));
     static JMenuBar mB;
-    static JMenu x;
+    static JMenu helpMenu;
     private JLabel timer;
     private JLabel score;
-    static JMenuItem instructionMenu;
-
+    static JMenuItem instructionMenuItem;
+    static JMenu changeCardBacksMenu;
+    static JRadioButtonMenuItem option1;
+    static JRadioButtonMenuItem option2;
+    static JRadioButtonMenuItem option3;
+    static JRadioButtonMenuItem option4;
+    static JMenu gameTypeMenu;
+    static JRadioButtonMenuItem regularRules;
+    static JRadioButtonMenuItem vegasRules;
+    ImageIcon cardBacks;
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
     public View(Controller cont, CardPile[] piles) {
@@ -106,23 +112,53 @@ public class View extends JFrame {
 
         //setting up menu bar
         mB = new JMenuBar();
-        x = new JMenu("Help");
-        instructionMenu = new JMenuItem("Instructions");
+
+        //creates menus
+        helpMenu = new JMenu("Help");
+        changeCardBacksMenu = new JMenu("Change Card Backs");
+        gameTypeMenu = new JMenu("Game Type");
+
+        //create menu items
+        instructionMenuItem = new JMenuItem("Instructions");
+
+        //adds group of radio button menu items
+        ButtonGroup cardBackGroup = new ButtonGroup();
+        option1 = new JRadioButtonMenuItem("Option 1");
+        option1.setSelected(true);
+        cardBackGroup.add(option1);
+        changeCardBacksMenu.add(option1);
+        option2 = new JRadioButtonMenuItem("Option 2");
+        option2.setSelected(true);
+        cardBackGroup.add(option2);
+        changeCardBacksMenu.add(option2);
+        option3 = new JRadioButtonMenuItem("Option 3");
+        option3.setSelected(true);
+        cardBackGroup.add(option3);
+        changeCardBacksMenu.add(option3);
+        option4 = new JRadioButtonMenuItem("Option 4");
+        option4.setSelected(true);
+        cardBackGroup.add(option4);
+        changeCardBacksMenu.add(option4);
+
+        ButtonGroup rulesGroup = new ButtonGroup();
+        regularRules = new JRadioButtonMenuItem("Regular Rules");
+        regularRules.setSelected(true);
+        rulesGroup.add(regularRules);
+        gameTypeMenu.add(regularRules);
+        vegasRules = new JRadioButtonMenuItem("Vegas Rules");
+        vegasRules.setSelected(true);
+        rulesGroup.add(vegasRules);
+        gameTypeMenu.add(vegasRules);
 
         //adds JMenuBar/items
-        x.add(instructionMenu);
-        mB.add(x);
-        this.setJMenuBar(mB);
+        helpMenu.add(instructionMenuItem);
+        mB.add(gameTypeMenu);
+        mB.add(changeCardBacksMenu);
+        mB.add(helpMenu);
 
-        //opens instructions window on button click
-        instructionMenu.addActionListener(e -> {
-            Instructions gui = new Instructions(View.this);
-            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            gui.setSize(790, 925);
-            gui.setLocation(700, 50);
-            gui.getContentPane().setBackground(new Color(62, 210, 175));
-            gui.setVisible(true);
-        });
+        //adds menubar and action listeners
+        this.setJMenuBar(mB);
+        menuBarActionListeners();
 
 
         scorePanel.add(score);
@@ -197,7 +233,6 @@ public class View extends JFrame {
         foundations.setVisible(true);
         this.setVisible(true);
     }
-
 
     private void update(int pile) {
         if (pile <= 1) {
@@ -502,6 +537,46 @@ public class View extends JFrame {
             graphics.setColor(getForeground());
             graphics.drawRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //paint border
         }
+    }
+
+    private void menuBarActionListeners() {
+        //opens instructions window on button click
+        instructionMenuItem.addActionListener(e -> {
+            Instructions gui = new Instructions(View.this);
+            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            gui.setSize(790, 925);
+            gui.setLocation(700, 50);
+            gui.getContentPane().setBackground(new Color(62, 210, 175));
+            gui.setVisible(true);
+        });
+
+        //add action listener for radio buttons
+        option1.addActionListener(e -> {
+            System.out.println("beep boop 1");
+
+        });
+
+        option2.addActionListener(e -> {
+            System.out.println("beep borp 2");
+        });
+
+        option3.addActionListener(e -> {
+            System.out.println("woot woot 3");
+        });
+
+        option4.addActionListener(e -> {
+            System.out.println("boop de doop 4");
+        });
+
+        regularRules.addActionListener(e -> {
+            System.out.println("Regular rules go here");
+        });
+
+        vegasRules.addActionListener(e -> {
+            System.out.println("Vegas rules go here");
+        });
+
+
     }
 
 }
