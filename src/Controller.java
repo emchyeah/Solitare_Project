@@ -98,6 +98,7 @@ public class Controller {
         if(gameTimer != null){
             gameTimer.cancel();
         }
+        scoreTime = 0;
         gameTimer = new GameTimer(this);
         startTime = Instant.now();
         Timer timer = new Timer();
@@ -379,4 +380,8 @@ public class Controller {
     public void setVegas(){
         vegas = true;
     }
+
+    public void setVegasContinous(boolean flag){vegasContinous = flag;}
+
+    public void setVegasScore(int x){vegasScore = x;}
 }
