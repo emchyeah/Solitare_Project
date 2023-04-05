@@ -288,10 +288,23 @@ public class Controller {
                 else{
                     view.updateVegasScore(vegasScore);
                 }
+
+                if(checkWin()){
+                    System.out.println("Insert Win Here");
+                }
                 return i;
             }
         }
         return -1;
+    }
+
+    private boolean checkWin(){
+        for(int i = 2; i <= 5; i++){
+            if(cardPiles[i].size() != 13){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void cardScore(int pilePos, int i){
