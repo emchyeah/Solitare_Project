@@ -19,12 +19,16 @@ public class Controller {
     private int gameMinutes;
 
     private int score;
+    private int vegasScore;
+    private boolean vegasContinous = false;
     private int scoreTime;
     private int draws = 0;
 
     private TimerTask gameTimer;
 
     public boolean timed = true;
+
+    private boolean vegas = false;
 
     public Controller(){
         deck = createDeck();
@@ -49,9 +53,22 @@ public class Controller {
         distributeCards(copyDeck(deck));
 
         score = 0;
+        if(vegasContinous){
+            vegasScore = vegasScore - 52;
+        }
+        else{
+            vegasScore = -52;
+        }
+
         if(view != null){
             startTimer();
-            view.updateScore(score);
+            if(!vegas){
+                view.updateScore(score);
+            }
+            else{
+                view.updateVegasScore(vegasScore);
+            }
+
         }
     }
 
@@ -61,7 +78,20 @@ public class Controller {
 
         startTimer();
         score = -50;
-        view.updateScore(score);
+        if(vegasContinous){
+            vegasScore = vegasScore - 52;
+        }
+        else{
+            vegasScore = -52;
+        }
+
+
+        if(!vegas){
+            view.updateScore(score);
+        }
+        else{
+            view.updateVegasScore(vegasScore);
+        }
     }
 
     private void startTimer(){
@@ -85,7 +115,9 @@ public class Controller {
             if(time.getSeconds() >= sec + 10) {
                 scoreTime++;
                 score -= 2;
-                view.updateScore(score);
+                if(!vegas){
+                    view.updateScore(score);
+                }
             }
         }
     }
@@ -180,6 +212,9 @@ public class Controller {
             }
 
             if(cardPiles[0].isEmpty() && !cardPiles[1].isEmpty()){
+                if(vegas){
+                    return -1;
+                }
                 Card currCard;
                 while(!cardPiles[1].isEmpty()){
                     currCard = cardPiles[1].removeTopCard();
@@ -190,7 +225,12 @@ public class Controller {
 
                 if(draws >= 1){
                     score = score -100;
-                    view.updateScore(score);
+                    if(!vegas){
+                        view.updateScore(score);
+                    }
+                    else{
+                        view.updateVegasScore(vegasScore);
+                    }
                 }
                 draws ++;
                 return 0;
@@ -240,7 +280,13 @@ public class Controller {
                     pile.getTopCard().setVisibility(true);
                     score += 5;
                 }
-                view.updateScore(score);
+
+                if(!vegas){
+                    view.updateScore(score);
+                }
+                else{
+                    view.updateVegasScore(vegasScore);
+                }
                 return i;
             }
         }
@@ -254,6 +300,7 @@ public class Controller {
 
         if(i <= 5){
             score += 10;
+            vegasScore += 5;
         }
 
         if(pilePos != 1 && i > 5){
@@ -323,5 +370,13 @@ public class Controller {
         else{
             return 0;
         }
+    }
+
+    public void setRegular(){
+        vegas = false;
+    }
+
+    public void setVegas(){
+        vegas = true;
     }
 }

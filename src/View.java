@@ -375,6 +375,7 @@ public class View extends JFrame {
     public void updateScore(int scoreVal){
         score.setText(""+scoreVal);
     }
+    public void updateVegasScore(int scoreVal) {score.setText(""+scoreVal+"$");}
 
     public class CardButton extends JButton {
         private Card.Suits suit;
@@ -569,11 +570,13 @@ public class View extends JFrame {
         });
 
         regularRules.addActionListener(e -> {
-            System.out.println("Regular rules go here");
+            controller.setRegular();
+            newG("New Game");
         });
 
         vegasRules.addActionListener(e -> {
-            System.out.println("Vegas rules go here");
+            controller.setVegas();
+            newG("New Game");
         });
 
 
