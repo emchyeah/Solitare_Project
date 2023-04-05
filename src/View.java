@@ -29,7 +29,8 @@ public class View extends JFrame {
     static JRadioButtonMenuItem option4;
     static JMenu gameTypeMenu;
     static JRadioButtonMenuItem regularRules;
-    static JRadioButtonMenuItem vegasRules;
+    static JRadioButtonMenuItem vegasRulesRegular;
+    static JRadioButtonMenuItem vegasRulesCont;
     ImageIcon cardBacks;
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
@@ -145,10 +146,14 @@ public class View extends JFrame {
         regularRules.setSelected(true);
         rulesGroup.add(regularRules);
         gameTypeMenu.add(regularRules);
-        vegasRules = new JRadioButtonMenuItem("Vegas Rules");
-        vegasRules.setSelected(true);
-        rulesGroup.add(vegasRules);
-        gameTypeMenu.add(vegasRules);
+        vegasRulesRegular = new JRadioButtonMenuItem("Vegas Rules");
+        vegasRulesRegular.setSelected(true);
+        rulesGroup.add(vegasRulesRegular);
+        gameTypeMenu.add(vegasRulesRegular);
+        vegasRulesCont = new JRadioButtonMenuItem("Vegas Rules Continuous Mode");
+        vegasRulesCont.setSelected(true);
+        rulesGroup.add(vegasRulesCont);
+        gameTypeMenu.add(vegasRulesCont);
 
         //adds JMenuBar/items
         helpMenu.add(instructionMenuItem);
@@ -369,7 +374,9 @@ public class View extends JFrame {
     }
 
     public void updateTime(int gameMinutes, int gameSeconds){
-        timer.setText(gameMinutes + ":" + gameSeconds);
+        String timeString = String.format("%02d:%02d", gameMinutes,gameSeconds);
+        timer.setText(timeString);
+        //timer.setText(gameMinutes + ":" + gameSeconds);
     }
 
     public void updateScore(int scoreVal){
@@ -574,9 +581,13 @@ public class View extends JFrame {
             newG("New Game");
         });
 
-        vegasRules.addActionListener(e -> {
+        vegasRulesRegular.addActionListener(e -> {
             controller.setVegas();
             newG("New Game");
+        });
+
+        vegasRulesCont.addActionListener(e ->{
+            System.out.println("vegas rules cont mode");
         });
 
 
