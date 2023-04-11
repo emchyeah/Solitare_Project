@@ -62,7 +62,6 @@ public class Instructions extends JDialog {
                         "<li>There is no time penalty or bonus awarded.</li>" +
                         "<li>If you select the Keep cumulative score option, you see a running total of your score from game to game.</li>" +
                         "<li>When you play using the Draw One option, you can go through the deck only once.</li>" +
-                        "<li>When you play using the Draw Three option, you can go through the deck only three times.</li></ul>" +
                         "</html>");
         add(label);
     }

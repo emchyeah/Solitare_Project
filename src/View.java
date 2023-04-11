@@ -9,8 +9,7 @@ import java.util.List;
 public class View extends JFrame {
 
     private CardPile[] cardPiles;
-    private final Controller controller;
-
+    final Controller controller;
     private JButton button;
     private JButton resetButton;
     private JPanel deck;
@@ -337,7 +336,7 @@ public class View extends JFrame {
     }
 
     // Method for re-setting the game
-    private void newG(String s) {
+    public void newG(String s) {
         controller.newGame();
         cardPiles = controller.getCardPiles();
         update(0);
@@ -593,7 +592,6 @@ public class View extends JFrame {
             controller.setVegasScore(0);
             newG("New Game");
         });
-
 
     }
 

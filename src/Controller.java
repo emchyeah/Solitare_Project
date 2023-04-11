@@ -290,7 +290,7 @@ public class Controller {
                 }
 
                 if(checkWin()){
-                    System.out.println("Insert Win Here");
+                    endGame();
                 }
                 return i;
             }
@@ -397,4 +397,13 @@ public class Controller {
     public void setVegasContinous(boolean flag){vegasContinous = flag;}
 
     public void setVegasScore(int x){vegasScore = x;}
+
+    private void endGame(){
+        EndGame end = new EndGame(view);
+        end.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        end.setSize(400, 250);
+        end.setLocation(450, 300);
+        end.getContentPane().setBackground(new Color(62, 210, 175));
+        end.setVisible(true);
+    }
 }
