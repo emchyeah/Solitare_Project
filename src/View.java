@@ -116,7 +116,7 @@ public class View extends JFrame {
 
         //creates menus
         helpMenu = new JMenu("Help");
-        changeCardBacksMenu = new JMenu("Change Card Backs");
+        changeCardBacksMenu = new JMenu("Card Decks");
         gameTypeMenu = new JMenu("Game Type");
 
         //create menu items
@@ -124,7 +124,7 @@ public class View extends JFrame {
 
         //adds group of radio button menu items
         ButtonGroup cardBackGroup = new ButtonGroup();
-        option1 = new JRadioButtonMenuItem("Option 1");
+        option1 = new JRadioButtonMenuItem("Default");
         option1.setSelected(true);
         cardBackGroup.add(option1);
         changeCardBacksMenu.add(option1);
