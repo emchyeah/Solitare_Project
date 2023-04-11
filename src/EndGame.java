@@ -9,6 +9,8 @@ public class EndGame extends JDialog {
     JButton vegas;
     JButton vegasCont;
     View view;
+    Controller controller;
+    CardPile[] cardPiles;
     public EndGame(JFrame frame) {
         super(frame, "Instructions", true);
         setLayout(new GridLayout(3, 0));
@@ -16,7 +18,7 @@ public class EndGame extends JDialog {
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 0));
         panel.setBackground(new Color(62, 210, 175));
-        label = new JLabel("<html><B>Congratulations for completing the game!</B></html>", SwingConstants.CENTER);
+        label = new JLabel("<html><B>Congratulations on completing the game!</B></html>", SwingConstants.CENTER);
 
         regular = new JButton("New Regular Rules Game");
         regular.addActionListener(e -> {
