@@ -583,11 +583,15 @@ public class View extends JFrame {
 
         vegasRulesRegular.addActionListener(e -> {
             controller.setVegas();
+            controller.setVegasContinous(false);
             newG("New Game");
         });
 
         vegasRulesCont.addActionListener(e ->{
-            System.out.println("vegas rules cont mode");
+            controller.setVegas();
+            controller.setVegasContinous(true);
+            controller.setVegasScore(0);
+            newG("New Game");
         });
 
 
