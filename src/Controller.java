@@ -257,7 +257,7 @@ public class Controller {
 
             if(checkCard(i, card)){
                 if(cardPiles[i].getFoundation() && pile.getTopCard() != card){
-                    return -1;
+                    continue;
                 }
 
                 cardScore(pilePos, i);
@@ -397,6 +397,8 @@ public class Controller {
     public void setVegasContinous(boolean flag){vegasContinous = flag;}
 
     public void setVegasScore(int x){vegasScore = x;}
+
+    public boolean getVegasContinous(){return vegasContinous;}
 
     private void endGame(){
         EndGame end = new EndGame(view);

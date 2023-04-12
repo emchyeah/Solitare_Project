@@ -11,8 +11,9 @@ public class EndGame extends JDialog {
     View view;
     Controller controller;
     CardPile[] cardPiles;
-    public EndGame(JFrame frame) {
+    public EndGame(View frame) {
         super(frame, "Instructions", true);
+        view = frame;
         setLayout(new GridLayout(3, 0));
 
         panel = new JPanel();
@@ -37,9 +38,11 @@ public class EndGame extends JDialog {
 
         vegasCont = new JButton("New Vegas Rules Continuous Game");
         vegasCont.addActionListener(e -> {
+            if(!view.controller.getVegasContinous()){
+                view.controller.setVegasScore(0);
+            }
             view.controller.setVegas();
             view.controller.setVegasContinous(true);
-            view.controller.setVegasScore(0);
             view.newG("New Game");
             setVisible(false);
         });
