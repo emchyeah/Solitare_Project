@@ -33,7 +33,7 @@ public class View extends JFrame {
     ImageIcon cardBacks;
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
-    public static String sets;
+    public static String sets = "";
 
     public View(Controller cont, CardPile[] piles) {
         super("Solitaire");
@@ -475,6 +475,22 @@ public class View extends JFrame {
             this.setContentAreaFilled(false);
         }
 
+        public void refreshCard(){
+            Image img;
+            if (this.suit == null) {
+                img = getCardOutline();
+            } else if (visible) {
+                img = setImage(value, suit);
+
+            } else {
+                img = getCardBack();
+            }
+            assert img != null;
+            this.setIcon(resizeIcon(img, this.getWidth(), this.getHeight()));
+            this.setBorderPainted(true);
+            this.setContentAreaFilled(false);
+        }
+
         private boolean checkCard(Card card) {
             return suit == card.getSuit() && value == card.getValue() && visible == card.getVisibility();
         }
@@ -561,57 +577,23 @@ public class View extends JFrame {
 
         //add action listener for radio buttons
         option1.addActionListener(e -> {
-            String st1 = "";
-
+            sets = "";
+            refreshAllImages();
         });
 
         option2.addActionListener(e -> {
-            String st2 = "cardImages/set2/";
-            controller.resetGame();
-            cardPiles = controller.getCardPiles();
-            update(0);
-            update(2);
-            update(6);
-            update(7);
-            update(8);
-            update(9);
-            update(10);
-            update(11);
-            update(12);
-            //System.out.println("beep borp 2");
-            // reset game method
+            sets = "set2/";
+            refreshAllImages();
         });
 
         option3.addActionListener(e -> {
-            String st3 = "cardImages/set3/";
-            controller.resetGame();
-            cardPiles = controller.getCardPiles();
-            update(0);
-            update(2);
-            update(6);
-            update(7);
-            update(8);
-            update(9);
-            update(10);
-            update(11);
-            update(12);
-            //System.out.println("woot woot 3");
+            sets = "set3/";
+            refreshAllImages();
         });
 
         option4.addActionListener(e -> {
-            String st4 = "cardImages/set4/";
-            controller.resetGame();
-            cardPiles = controller.getCardPiles();
-            update(0);
-            update(2);
-            update(6);
-            update(7);
-            update(8);
-            update(9);
-            update(10);
-            update(11);
-            update(12);
-            //System.out.println("boop de doop 4");
+            sets = "set4/";
+            refreshAllImages();
         });
 
         regularRules.addActionListener(e -> {
@@ -632,6 +614,26 @@ public class View extends JFrame {
             newG("New Game");
         });
 
+    }
+
+    private void refreshAllImages(){
+        refreshPileImages(deck);
+        refreshPileImages(foundations);
+        for(JPanel pile : buttonPiles){
+            refreshPileImages(pile);
+        }
+    }
+
+    private void refreshPileImages(JPanel pile){
+        Component[] comps = pile.getComponents();
+        int j = 0;
+        CardButton cB;
+        for (Component comp : comps) {
+            if (comp.getClass() == CardButton.class) {
+                cB = (CardButton) comp;
+                cB.refreshCard();
+            }
+        }
     }
 
 }
