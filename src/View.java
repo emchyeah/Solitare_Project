@@ -33,6 +33,8 @@ public class View extends JFrame {
     ImageIcon cardBacks;
     private static List<CardButton> litCards = new ArrayList<CardButton>();
 
+    public static String sets;
+
     public View(Controller cont, CardPile[] piles) {
         super("Solitaire");
         this.cardPiles = piles;
@@ -484,7 +486,7 @@ public class View extends JFrame {
             ImageIcon icon;
             Image image;
             try {
-                icon = new ImageIcon(Card.class.getResource("cardImages/" + imageFile));
+                icon = new ImageIcon(Card.class.getResource("cardImages/" + sets + imageFile));
                 image = icon.getImage();
             } catch (NullPointerException e) {
                 e.getMessage();
@@ -502,7 +504,7 @@ public class View extends JFrame {
 
         //gets back of card image
         private static Image getCardBack() {
-            ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/backOfCard.png"));
+            ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/" + sets + "backOfCard.png"));
             return icon.getImage();
         }
 
@@ -559,20 +561,57 @@ public class View extends JFrame {
 
         //add action listener for radio buttons
         option1.addActionListener(e -> {
-            System.out.println("beep boop 1");
+            String st1 = "";
 
         });
 
         option2.addActionListener(e -> {
-            System.out.println("beep borp 2");
+            String st2 = "cardImages/set2/";
+            controller.resetGame();
+            cardPiles = controller.getCardPiles();
+            update(0);
+            update(2);
+            update(6);
+            update(7);
+            update(8);
+            update(9);
+            update(10);
+            update(11);
+            update(12);
+            //System.out.println("beep borp 2");
+            // reset game method
         });
 
         option3.addActionListener(e -> {
-            System.out.println("woot woot 3");
+            String st3 = "cardImages/set3/";
+            controller.resetGame();
+            cardPiles = controller.getCardPiles();
+            update(0);
+            update(2);
+            update(6);
+            update(7);
+            update(8);
+            update(9);
+            update(10);
+            update(11);
+            update(12);
+            //System.out.println("woot woot 3");
         });
 
         option4.addActionListener(e -> {
-            System.out.println("boop de doop 4");
+            String st4 = "cardImages/set4/";
+            controller.resetGame();
+            cardPiles = controller.getCardPiles();
+            update(0);
+            update(2);
+            update(6);
+            update(7);
+            update(8);
+            update(9);
+            update(10);
+            update(11);
+            update(12);
+            //System.out.println("boop de doop 4");
         });
 
         regularRules.addActionListener(e -> {
