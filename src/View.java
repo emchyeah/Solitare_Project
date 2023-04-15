@@ -506,6 +506,7 @@ public class View extends JFrame {
                 image = icon.getImage();
             } catch (NullPointerException e) {
                 e.getMessage();
+                System.out.println("cardImages/" + sets + imageFile);
                 return null;
             }
             return image;
@@ -514,14 +515,30 @@ public class View extends JFrame {
 
         //gets card outline to use in empty space
         private static Image getCardOutline() {
-            ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/bottom01.png"));
-            return icon.getImage();
+            Image image;
+            try {
+                ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/bottom01.png"));
+                image = icon.getImage();
+            } catch (NullPointerException e) {
+                e.getMessage();
+                System.out.println("cardImages/bottom01.png");
+                return null;
+            }
+            return image;
         }
 
         //gets back of card image
         private static Image getCardBack() {
-            ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/" + sets + "backOfCard.png"));
-            return icon.getImage();
+            Image image;
+            try {
+                ImageIcon icon = new ImageIcon(Card.class.getResource("cardImages/" + sets + "backOfCard.png"));
+                image = icon.getImage();
+            } catch (NullPointerException e) {
+                e.getMessage();
+                System.out.println("cardImages/" + sets + "backOfCard.png");
+                return null;
+            }
+            return image;
         }
 
         //resizes card image to fit in button
